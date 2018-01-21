@@ -14,6 +14,7 @@ import org.joml.Rayd;
 import org.joml.Spheref;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
+import quinn.brandon.math.MathUtil;
 import quinn.brandon.scene.Scene;
 
 public class Sphere extends Volume
@@ -94,11 +95,19 @@ public class Sphere extends Volume
 			
 			// multiply all light intensities
 			Color3d result = new Color3d(color().r(), color().g(), color().b());
+			Color3d addedIntensities = new Color3d(0, 0, 0);
 			for (int l = 0; l < lightIntensities.size(); l++) {
-				result.x *= lightIntensities.get(l).x;
-				result.y *= lightIntensities.get(l).y;
-				result.z *= lightIntensities.get(l).z;
+				addedIntensities.x += lightIntensities.get(l).x;
+				addedIntensities.y += lightIntensities.get(l).y;
+				addedIntensities.z += lightIntensities.get(l).z;
 			}
+			
+			result.mul(new Vector3d(addedIntensities.x, addedIntensities.y, addedIntensities.z));
+			result.x = MathUtil.clamp(result.x, 0, 255);
+			result.y = MathUtil.clamp(result.y, 0, 255);
+			result.z = MathUtil.clamp(result.z, 0, 255);
+			
+			System.out.println("light intensity: " + addedIntensities.toString());
 
 			return result;
 		}

@@ -34,8 +34,6 @@ public class PointLight extends Light
 				Vector3d c = new Vector3d(color.getRed(), color.getGreen(), color.getBlue());
 				c = c.mul(intensity);
 				return new Color3d(c.x, c.y, c.z);
-			} else if (volume instanceof Sphere && intersects) {
-				return new Color3d(0, 0, 0);
 			}
 		}
 		

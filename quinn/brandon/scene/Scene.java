@@ -40,11 +40,11 @@ public class Scene
 		volumes.add(sphere2);
 		
 		PointLight light = new PointLight();
-		light.location = new Vector3d(300.0, 300.0, 30.0);
+		light.location = new Vector3d(305.0, 260.0, 30.0);
 		lights.add(light);
 		
 		PointLight light2 = new PointLight();
-		light2.location = new Vector3d(300.0, 255.0, 30.0);
+		light2.location = new Vector3d(305.0, 289.0, 37.0);
 		lights.add(light2);
 	}
 	
