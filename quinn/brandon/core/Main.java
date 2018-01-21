@@ -20,7 +20,7 @@ public class Main
 	{
 		WaitingDialog.start();
 		RayTracer rayTracer = new RayTracer(WIDTH, HEIGHT, SUPER_SAMPLE_FACTOR);
-		BufferedImage image = rayTracer.start();
+		BufferedImage image = rayTracer.render();
 		WaitingDialog.stop();
 		
 		MainWindow window = new MainWindow(image);

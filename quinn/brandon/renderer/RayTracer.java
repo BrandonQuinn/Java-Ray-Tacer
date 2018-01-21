@@ -34,7 +34,7 @@ public class RayTracer
 	 * 
 	 * @return
 	 */
-	public BufferedImage start()
+	public BufferedImage render()
 	{
 		image = new RenderBuffer(camera.width * supersamplingFactor, camera.height * supersamplingFactor);
 		

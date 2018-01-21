@@ -1,12 +1,12 @@
 ## TODO
 
-- Ambient Lighting
+- Perspective-Correct Interpolation
 - Handle Multiple Volumes in Scene
 - Handle Multiple Lights in Scene
+- Ambient Lighting
 - Multiple Light Intensity & Colour Interpolation
 - Quad and Tri Hit Detection
 - Point Light Variability (Intensity, Attenuation, Range)
-- Anti-Aliasing (Super Sampling)
 
 ## Dependencies 
 
