@@ -27,12 +27,15 @@ public class PointLight extends Light
 	@Override public Color3d hit(Vector3d start)
 	{
 		for (Volume volume : Scene.volumes()) {
-			if (volume instanceof Sphere && !Intersectiond.testLineSegmentSphere(start, location, volume.location(), ((Sphere) volume).radius())) {
+			boolean intersects = Intersectiond.testLineSegmentSphere(start, location, volume.location(), ((Sphere) volume).radius());
+			if (volume instanceof Sphere && !intersects) {
 				double distance = start.distance(location);
 				double intensity = (1.0 / (distance * distance));
 				Vector3d c = new Vector3d(color.getRed(), color.getGreen(), color.getBlue());
 				c = c.mul(intensity);
 				return new Color3d(c.x, c.y, c.z);
+			} else if (volume instanceof Sphere && intersects) {
+				return new Color3d(0, 0, 0);
 			}
 		}
 		

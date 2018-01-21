@@ -1,5 +1,7 @@
 package quinn.brandon.renderer;
 
+import java.util.ArrayList;
+
 /***************************************************************************************
  * @author Brandon Quinn
  * @since 21 Jan 2018
@@ -12,7 +14,6 @@ import org.joml.Rayd;
 import org.joml.Spheref;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
-import quinn.brandon.math.MathUtil;
 import quinn.brandon.scene.Scene;
 
 public class Sphere extends Volume
@@ -70,9 +71,11 @@ public class Sphere extends Volume
 		
 		// forced to possibly lose some precision because the JOML library does not provide a
 		// Intersectiond.intersectRaySphere that takes in a Sphered
-		Spheref sphere = new Spheref((float) location().x, 
+		Spheref sphere = new Spheref(
+				(float) location().x, 
 				(float) location().y, 
-				(float) location().z, (float) radius);
+				(float) location().z, 
+				(float) radius);
 		
 		if (Intersectiond.intersectRaySphere(ray, sphere, hitDists))
 		{
@@ -83,15 +86,21 @@ public class Sphere extends Volume
 			hitPoint.add(new Vector3d(ray.oX, ray.oY, ray.oZ));
 
 			// go through each light and get the intensity
+			ArrayList<Color3d> lightIntensities = new ArrayList<Color3d>();
 			for (Light light: Scene.lights()) {
 				Color3d C = light.hit(hitPoint);
-				if (C != null) {
-					Color3d result = new Color3d(MathUtil.clamp(C.x * color().r(), 0, 255), 
-							MathUtil.clamp(C.y * color().g(), 0, 255), 
-							MathUtil.clamp(C.z * color().b(), 0, 255));
-					return result;
-				}
+				if (C != null) lightIntensities.add(C);
 			}
+			
+			// multiply all light intensities
+			Color3d result = new Color3d(color().r(), color().g(), color().b());
+			for (int l = 0; l < lightIntensities.size(); l++) {
+				result.x *= lightIntensities.get(l).x;
+				result.y *= lightIntensities.get(l).y;
+				result.z *= lightIntensities.get(l).z;
+			}
+
+			return result;
 		}
 		
 		return null;

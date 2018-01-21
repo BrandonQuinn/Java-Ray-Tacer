@@ -31,17 +31,21 @@ public class Scene
 	
 	static {
 		// add a couple of spheres
-		Sphere sphere1 = new Sphere(50.0, new Vector3d(310.0, 310.0, 100.0));
+		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 310.0, 60.0));
 		sphere1.setColor(new Color3d(255, 100, 100));
 		volumes.add(sphere1);
 		
-		Sphere sphere2 = new Sphere(40.0, new Vector3d(200.0, 200.0, 60.0));
+		Sphere sphere2 = new Sphere(20.0, new Vector3d(310.0, 265.0, 60.0));
 		sphere2.setColor(new Color3d(100, 100, 255));
 		volumes.add(sphere2);
 		
 		PointLight light = new PointLight();
-		light.location = new Vector3d(220.0, 220.0, 10.0);
+		light.location = new Vector3d(300.0, 300.0, 30.0);
 		lights.add(light);
+		
+		PointLight light2 = new PointLight();
+		light2.location = new Vector3d(300.0, 255.0, 30.0);
+		lights.add(light2);
 	}
 	
 	/**

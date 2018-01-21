@@ -17,7 +17,7 @@ public class Camera
 	 * Turning this on results in rays going straight out from each pixel.
 	 * If it's off then rays start at an origin point and spread out across the view frustum.
 	 */
-	public static boolean isOrthographic = false;
+	public static boolean isOrthographic = true;
 	public int width = 100;
 	public int height = 100;
 	public int resolutionX = 100;
