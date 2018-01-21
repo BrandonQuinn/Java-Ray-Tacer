@@ -32,7 +32,7 @@ public class Scene
 	static {
 		// add a couple of spheres
 		Sphere sphere1 = new Sphere(50.0, new Vector3d(310.0, 310.0, 40.0));
-		sphere1.setColor(new Color3d(255, 200, 200));
+		sphere1.setColor(new Color3d(255, 100, 100));
 		volumes.add(sphere1);
 		
 		PointLight light = new PointLight();

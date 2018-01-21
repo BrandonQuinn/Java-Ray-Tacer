@@ -14,7 +14,7 @@ public class Main
 {
 	public static int WIDTH = 640;
 	public static int HEIGHT = 640;
-	public static int SUPER_SAMPLE_FACTOR = 1;
+	public static int SUPER_SAMPLE_FACTOR = 2;
 	
 	public static void main(String args[]) 
 	{

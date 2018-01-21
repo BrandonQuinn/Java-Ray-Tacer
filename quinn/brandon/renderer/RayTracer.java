@@ -40,7 +40,7 @@ public class RayTracer
 		
 		for (int x = 0; x < camera.width * supersamplingFactor; x++) {
 			for (int y = 0; y < camera.height * supersamplingFactor; y++) {
-				Rayd ray = camera.ray(x, y);
+				Rayd ray = camera.ray(x / (double) supersamplingFactor, y / (double) supersamplingFactor);
 				for (Volume volume : Scene.volumes()) {
 					Color3d color = volume.hit(ray);
 					if (color != null) image.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));

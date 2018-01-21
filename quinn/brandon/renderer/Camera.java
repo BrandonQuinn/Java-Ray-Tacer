@@ -34,7 +34,7 @@ public class Camera
 	 * @param y
 	 * @return
 	 */
-	public Rayd ray(int x, int y)
+	public Rayd ray(double x, double y)
 	{
 		if (isOrthographic) {
 			origin.x = x;

@@ -8,6 +8,6 @@
 - Point Light Variability (Intensity, Attenuation, Range)
 - Anti-Aliasing (Super Sampling)
 
-##Dependencies 
+## Dependencies 
 
 - JOML-1.9.7 (OpenGL 3D Mathematics Library)
