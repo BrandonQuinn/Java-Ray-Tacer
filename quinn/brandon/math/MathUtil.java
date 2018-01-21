@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.math;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -7,22 +7,10 @@ package quinn.brandon.core;
  * Licenced under the MIT License.
  ***************************************************************************************/
 
-import org.joml.Rayd;
-
-public abstract class Cube extends Volume
+public class MathUtil
 {
-	private double size = 5.0;
-	
-	public void setSize(double size)
+	public static double clamp(double v, double min, double max)
 	{
-		this.size = size;
+		return Math.max(min, Math.min(max, v));
 	}
-	
-	public double size()
-	{
-		return size;
-	}
-
-	@Override
-	public abstract Color3d hit(Rayd ray);
 }

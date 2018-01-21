@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.renderer;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -9,6 +9,7 @@ package quinn.brandon.core;
 
 import java.awt.image.BufferedImage;
 import org.joml.Rayd;
+import quinn.brandon.scene.Scene;
 
 /**
  * A singleton which is used to send out rays in to the 
@@ -43,7 +44,7 @@ public class RayTracer
 				Rayd ray = camera.ray(x, y);
 				for (Volume volume : Scene.volumes()) {
 					Color3d color = volume.hit(ray);
-					if (color != null) image.setPixel(x, y, new Pixel(color.r(), color.g(), color.b()));
+					if (color != null) image.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
 				}
 			}
 		}

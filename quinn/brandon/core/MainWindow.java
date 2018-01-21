@@ -11,6 +11,7 @@ import java.awt.Frame;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import quinn.brandon.renderer.RenderCanvas;
 
 public class MainWindow extends Frame implements WindowListener
 {

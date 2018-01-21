@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.renderer;
 
 /***************************************************************************************
  * @author Brandon Quinn

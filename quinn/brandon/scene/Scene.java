@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.scene;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -9,6 +9,11 @@ package quinn.brandon.core;
 
 import java.util.ArrayList;
 import org.joml.Vector3d;
+import quinn.brandon.renderer.Color3d;
+import quinn.brandon.renderer.Light;
+import quinn.brandon.renderer.PointLight;
+import quinn.brandon.renderer.Sphere;
+import quinn.brandon.renderer.Volume;
 
 public class Scene
 {

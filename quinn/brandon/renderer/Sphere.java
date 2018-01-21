@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.renderer;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -12,6 +12,8 @@ import org.joml.Rayd;
 import org.joml.Spheref;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
+import quinn.brandon.math.MathUtil;
+import quinn.brandon.scene.Scene;
 
 public class Sphere extends Volume
 {
@@ -55,8 +57,15 @@ public class Sphere extends Volume
 	}
 	
 
-	@Override
-	public Color3d hit(Rayd ray)
+	/**
+	 * Returns null if the ray doesn't hit any volumes in the world.
+	 * If it does hit an object it will then get the position and check lighting and
+	 * run extra rays out in to the world for reflections, lighting, caustics etc.
+	 * 
+	 * @param ray The ray shooting out from which ever pixel on the screen view.
+	 * @return The colour corresponding the where the ray hit on the sphere.
+	 */
+	@Override public Color3d hit(Rayd ray)
 	{
 		Vector2d hitDists = new Vector2d();
 		
@@ -73,9 +82,7 @@ public class Sphere extends Volume
 			Vector3d hitPoint = new Vector3d(ray.dX, ray.dY, ray.dZ);
 			hitPoint.mul(closest);
 			hitPoint.add(new Vector3d(ray.oX, ray.oY, ray.oZ));
-			
-			System.out.println("Hit point: (" + hitPoint.x + ", " + hitPoint.y + ", " + hitPoint.z + ")");
-	
+
 			// go through each light and get the intensity
 			for (Light light: Scene.lights()) {
 				Color3d C = light.hit(hitPoint);

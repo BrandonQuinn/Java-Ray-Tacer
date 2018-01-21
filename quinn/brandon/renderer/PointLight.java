@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.renderer;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -9,6 +9,7 @@ package quinn.brandon.core;
 
 import org.joml.Intersectiond;
 import org.joml.Vector3d;
+import quinn.brandon.scene.Scene;
 
 public class PointLight extends Light
 {
@@ -16,8 +17,14 @@ public class PointLight extends Light
 	public double linearAttenuation = 1.0f;
 	public double quadraticAttenuation = 1.0f;
 	
-	@Override
-	public Color3d hit(Vector3d start)
+	/**
+	 * Create a line from the start position given and the location of the light
+	 * and check the distance. Use the inverse of the square of the distance to calculate
+	 * the intensity of the light.
+	 * 
+	 * @return Return the intensity for each r, g, b value as a Color3d {@see #Color3d}
+	 */
+	@Override public Color3d hit(Vector3d start)
 	{
 		for (Volume volume : Scene.volumes()) {
 			if (volume instanceof Sphere && !Intersectiond.testLineSegmentSphere(start, location, volume.location(), ((Sphere) volume).radius())) {

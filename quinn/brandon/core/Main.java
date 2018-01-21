@@ -8,6 +8,7 @@ package quinn.brandon.core;
  ***************************************************************************************/
 
 import java.awt.image.BufferedImage;
+import quinn.brandon.renderer.RayTracer;
 
 public class Main
 {

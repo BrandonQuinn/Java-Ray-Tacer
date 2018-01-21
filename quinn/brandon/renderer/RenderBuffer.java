@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.renderer;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -35,11 +35,11 @@ public class RenderBuffer
 	 * @param y
 	 * @param argb
 	 */
-	public void setPixel(int x, int y, Pixel pixel)
+	public void setPixel(int x, int y, Color3d pixel)
 	{
-		raster.setSample(x, y, 0, pixel.r);
-		raster.setSample(x, y, 1, pixel.g);
-		raster.setSample(x, y, 2, pixel.b);
+		raster.setSample(x, y, 0, (int) pixel.r());
+		raster.setSample(x, y, 1, (int) pixel.g());
+		raster.setSample(x, y, 2, (int) pixel.b());
 		raster.setSample(x, y, 3, 255);
 	}
 	

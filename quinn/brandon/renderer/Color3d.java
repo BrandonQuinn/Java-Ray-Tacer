@@ -1,4 +1,4 @@
-package quinn.brandon.core;
+package quinn.brandon.renderer;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -46,8 +46,7 @@ public class Color3d extends Vector3d
 		return false;
 	}
 	
-	@Override
-	public String toString()
+	@Override public String toString()
 	{
 		String string = "";
 		string = "(" + x + ", " + y + ", " + z + ")";
