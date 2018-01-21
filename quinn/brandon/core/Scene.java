@@ -4,7 +4,7 @@ package quinn.brandon.core;
  * @author Brandon Quinn
  * @since 21 Jan 2018
  * 
- * Licenced under MIT.
+ * Licenced under the MIT License.
  ***************************************************************************************/
 
 import java.util.ArrayList;
