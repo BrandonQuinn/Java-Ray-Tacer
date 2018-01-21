@@ -1,7 +1,7 @@
 ## TODO
 
 - Perspective-Correct Interpolation
-- Handle Multiple Volumes in Scene
+- Z-Depth Test for Overlapping Volumes to Get Nearest
 - Ambient Lighting
 - Multiple Light Intensity & Colour Interpolation
 - Quad and Tri Hit Detection
