@@ -106,8 +106,6 @@ public class Sphere extends Volume
 			result.x = MathUtil.clamp(result.x, 0, 255);
 			result.y = MathUtil.clamp(result.y, 0, 255);
 			result.z = MathUtil.clamp(result.z, 0, 255);
-			
-			System.out.println("light intensity: " + addedIntensities.toString());
 
 			return result;
 		}

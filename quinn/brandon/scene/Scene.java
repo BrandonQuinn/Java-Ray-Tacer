@@ -44,7 +44,7 @@ public class Scene
 		lights.add(light);
 		
 		PointLight light2 = new PointLight();
-		light2.location = new Vector3d(305.0, 289.0, 37.0);
+		light2.location = new Vector3d(305.0, 280.0, 37.0);
 		lights.add(light2);
 	}
 	
