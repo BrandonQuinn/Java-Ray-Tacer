@@ -56,7 +56,6 @@ public class Sphere extends Volume
 		return radius;
 	}
 	
-
 	/**
 	 * Returns null if the ray doesn't hit any volumes in the world.
 	 * If it does hit an object it will then get the position and check lighting and

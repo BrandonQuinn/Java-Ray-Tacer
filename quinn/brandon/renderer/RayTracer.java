@@ -17,14 +17,13 @@ import quinn.brandon.scene.Scene;
  */
 public class RayTracer
 {
-	public static float MAX_DRAW_DEPTH = 1.0f;
-	public static float MIN_DRAW_DEPTH = 0.0f;
-	
 	private RenderBuffer image;
 	private Camera camera;
+	private int supersamplingFactor;
 	
-	public RayTracer(int width, int height)
+	public RayTracer(int width, int height, int supersamplingFactor)
 	{
+		this.supersamplingFactor = supersamplingFactor;
 		camera = new Camera();
 		camera.width = width;
 		camera.height = height;
@@ -37,16 +36,22 @@ public class RayTracer
 	 */
 	public BufferedImage start()
 	{
-		image = new RenderBuffer(camera.width, camera.height);
+		image = new RenderBuffer(camera.width * supersamplingFactor, camera.height * supersamplingFactor);
 		
-		for (int x = 0; x < camera.width; x++) {
-			for (int y = 0; y < camera.height; y++) {
+		for (int x = 0; x < camera.width * supersamplingFactor; x++) {
+			for (int y = 0; y < camera.height * supersamplingFactor; y++) {
 				Rayd ray = camera.ray(x, y);
 				for (Volume volume : Scene.volumes()) {
 					Color3d color = volume.hit(ray);
 					if (color != null) image.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
 				}
 			}
+		}
+		
+		// only down sample if the factor is not 1
+		if (supersamplingFactor != 1) {
+			RenderBuffer downSampledImage = image.downSample(supersamplingFactor);
+			return downSampledImage.image();
 		}
 		
 		return image.image();

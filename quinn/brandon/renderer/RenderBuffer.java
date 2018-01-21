@@ -12,14 +12,14 @@ import java.awt.image.WritableRaster;
 
 public class RenderBuffer
 {
-	private BufferedImage image;
-	private WritableRaster raster;
+	private volatile BufferedImage image;
+	private volatile WritableRaster raster;
 	
 	public RenderBuffer(int width, int height)
 	{
 		image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		raster = image.getRaster();
-		
+
 		// set to all black
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -44,6 +44,41 @@ public class RenderBuffer
 	}
 	
 	/**
+	 * For every pixel we are going to merge it with surrounding pixels in to one by the sampling factor.
+	 * 
+	 * @param supersamplingFactor
+	 * @return
+	 */
+	public RenderBuffer downSample(int supersamplingFactor)
+	{
+		RenderBuffer downSampledImage = new RenderBuffer(image.getWidth() / supersamplingFactor, image.getHeight() / supersamplingFactor);
+		int[][][] sample = new int[supersamplingFactor][supersamplingFactor][4];
+		
+		Color3d average = new Color3d(0, 0, 0);
+		for (int x = 0; x < downSampledImage.image().getWidth(); x++) {
+			for (int y = 0; y < downSampledImage.image().getHeight(); y++) {
+				average.x = 0; average.y = 0; average.z = 0;
+				// go throw the sample on the large image (this)
+				for (int xx = x * supersamplingFactor, sx = 0; xx < x * supersamplingFactor + supersamplingFactor; xx++, sx++) {
+					for (int yy = y * supersamplingFactor, sy = 0; yy < y * supersamplingFactor + supersamplingFactor; yy++, sy++) {
+						raster.getPixel(xx, yy, sample[sx][sy]);
+						average.x += sample[sx][sy][0];
+						average.y += sample[sx][sy][1];
+						average.z += sample[sx][sy][2];
+					}
+				}
+				
+				average.x /= supersamplingFactor * supersamplingFactor;
+				average.y /= supersamplingFactor * supersamplingFactor;
+				average.z /= supersamplingFactor * supersamplingFactor;
+				downSampledImage.setPixel(x, y, average);
+			}
+		}
+				
+		return downSampledImage;
+	}
+	
+	/**
 	 * Return the image associated with this buffer.
 	 * 
 	 * @return
@@ -52,4 +87,6 @@ public class RenderBuffer
 	{
 		return image;
 	}
+
+
 }
