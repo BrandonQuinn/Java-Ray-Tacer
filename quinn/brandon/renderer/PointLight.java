@@ -13,9 +13,7 @@ import quinn.brandon.scene.Scene;
 
 public class PointLight extends Light
 {
-	public double constantAttenuation = 1.0f;
-	public double linearAttenuation = 1.0f;
-	public double quadraticAttenuation = 1.0f;
+	public double quadraticAttenuation = 0.20;
 	
 	/**
 	 * Create a line from the start location given and the location of the light
@@ -28,15 +26,15 @@ public class PointLight extends Light
 	{
 		for (Volume volume : Scene.volumes()) {
 			if (volume instanceof Sphere) {
-				boolean intersects = Intersectiond.testLineSegmentSphere(start, location, volume.location, ((Sphere) volume).radius());
-				if (!intersects) {
-					double distance = start.distance(location);
-					double intensity = (1.0 / (distance * distance));
-					Vector3d c = new Vector3d(color.getRed(), color.getGreen(), color.getBlue());
-					c = c.mul(intensity);
-					return new Color3d(c.x, c.y, c.z);
-				}
+			boolean intersects = Intersectiond.testLineSegmentSphere(start, location, volume.location, ((Sphere) volume).radius());
+			if (!intersects) {
+				double distance = start.distance(location);
+				double intensity = (1.0 / (quadraticAttenuation * (distance * distance)));
+				Vector3d c = new Vector3d(color.r(), color.g(), color.g());
+				c = c.mul(intensity);
+				return new Color3d(c.x, c.y, c.z);
 			}
+		}
 		}
 		
 		return null;

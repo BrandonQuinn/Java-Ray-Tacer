@@ -36,10 +36,15 @@ public class Scene
 	
 	static {
 		
-		for (int i = 0; i < 5; i++) { 
-			for (int j = 0; j < 5; j++) { 
+		for (int i = 0; i < 6; i++) { 
+			for (int j = 0; j < 6; j++) { 
 				PointLight light3 = new PointLight();
-				light3.location = new Vector3d(20 + i * 100, 20 + j * 100, 580);
+				light3.location = new Vector3d(20 + i * 250, 20 + j * 250, 590);
+				
+				if (i == 3) {
+					light3.color = new Color3d(255, 0, 0);
+				}
+				
 				addLight(light3);
 			}
 		}
@@ -61,10 +66,12 @@ public class Scene
 		
 		PointLight light = new PointLight();
 		light.location = new Vector3d(305.0, 260.0, 30.0);
+		light.quadraticAttenuation = 0.5;
 		addLight(light);
 		
 		PointLight light2 = new PointLight();
 		light2.location = new Vector3d(305.0, 220.0, 37.0);
+		light2.quadraticAttenuation = 0.5;
 		addLight(light2);
 	}
 	

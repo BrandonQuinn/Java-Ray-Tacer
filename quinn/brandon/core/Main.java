@@ -14,7 +14,7 @@ public class Main
 {
 	public static int WIDTH = 1280;
 	public static int HEIGHT = 720;
-	public static int FSAA_FACTOR = 2;
+	public static int FSAA_FACTOR = 4;
 	public static int THREAD_COUNT = 8;
 	
 	public static void main(String args[]) 
@@ -24,6 +24,7 @@ public class Main
 				WIDTH, HEIGHT, FSAA_FACTOR, 
 				THREAD_COUNT
 		);
+		
 		BufferedImage image = rayTracer.render();
 		WaitingDialog.stop();
 		
