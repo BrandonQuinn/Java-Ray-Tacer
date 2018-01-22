@@ -1,5 +1,12 @@
 package quinn.brandon.renderer;
 
+/***************************************************************************************
+ * @author Brandon Quinn
+ * @since 22 Jan 2018
+ * 
+ * Licenced under the MIT License.
+ ***************************************************************************************/
+
 import org.joml.Rayd;
 import org.joml.Vector3d;
 
