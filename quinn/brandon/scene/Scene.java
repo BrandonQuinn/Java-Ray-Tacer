@@ -35,7 +35,7 @@ public class Scene
 		sphere1.setColor(new Color3d(255, 100, 100));
 		volumes.add(sphere1);
 		
-		Sphere sphere2 = new Sphere(20.0, new Vector3d(310.0, 265.0, 60.0));
+		Sphere sphere2 = new Sphere(40.0, new Vector3d(310.0, 220.0, 60.0));
 		sphere2.setColor(new Color3d(100, 100, 255));
 		volumes.add(sphere2);
 		
@@ -44,7 +44,7 @@ public class Scene
 		lights.add(light);
 		
 		PointLight light2 = new PointLight();
-		light2.location = new Vector3d(305.0, 280.0, 37.0);
+		light2.location = new Vector3d(305.0, 220.0, 37.0);
 		lights.add(light2);
 	}
 	

@@ -14,12 +14,12 @@ public class Main
 {
 	public static int WIDTH = 640;
 	public static int HEIGHT = 640;
-	public static int SUPER_SAMPLE_FACTOR = 2;
+	public static int FSAA_FACTOR = 4;
 	
 	public static void main(String args[]) 
 	{
 		WaitingDialog.start();
-		RayTracer rayTracer = new RayTracer(WIDTH, HEIGHT, SUPER_SAMPLE_FACTOR);
+		RayTracer rayTracer = new RayTracer(WIDTH, HEIGHT, FSAA_FACTOR);
 		BufferedImage image = rayTracer.render();
 		WaitingDialog.stop();
 		

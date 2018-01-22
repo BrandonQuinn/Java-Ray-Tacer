@@ -17,7 +17,6 @@ import quinn.brandon.scene.Scene;
  */
 public class RayTracer
 {
-	private RenderBuffer image;
 	private Camera camera;
 	private int supersamplingFactor;
 	
@@ -25,8 +24,10 @@ public class RayTracer
 	{
 		this.supersamplingFactor = supersamplingFactor;
 		camera = new Camera();
-		camera.width = width;
-		camera.height = height;
+		camera.resolutionX = width * supersamplingFactor;
+		camera.resolutionY = height * supersamplingFactor;
+		camera.projectionPlaneWidth = width;
+		camera.projectionPlaneHeight = height;
 	}
 	
 	/**
@@ -36,24 +37,24 @@ public class RayTracer
 	 */
 	public BufferedImage render()
 	{
-		image = new RenderBuffer(camera.width * supersamplingFactor, camera.height * supersamplingFactor);
+		RenderBuffer FSAAsuperImage = new RenderBuffer(camera.resolutionX, camera.resolutionY);
 		
-		for (int x = 0; x < camera.width * supersamplingFactor; x++) {
-			for (int y = 0; y < camera.height * supersamplingFactor; y++) {
+		for (int x = 0; x < camera.resolutionX; x++) {
+			for (int y = 0; y < camera.resolutionY; y++) {
 				Rayd ray = camera.ray(x / (double) supersamplingFactor, y / (double) supersamplingFactor);
 				for (Volume volume : Scene.volumes()) {
 					Color3d color = volume.hit(ray);
-					if (color != null) image.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
+					if (color != null) FSAAsuperImage.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
 				}
 			}
 		}
 		
 		// only down sample if the factor is not 1
 		if (supersamplingFactor != 1) {
-			RenderBuffer downSampledImage = image.downSample(supersamplingFactor);
+			RenderBuffer downSampledImage = FSAAsuperImage.downSample(supersamplingFactor);
 			return downSampledImage.image();
 		}
 		
-		return image.image();
+		return FSAAsuperImage.image();
 	}
 }
