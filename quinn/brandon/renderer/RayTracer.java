@@ -60,6 +60,9 @@ public class RayTracer
 		
 		// SINGLE THREADED RENDERING
 		if (threadCount <= 1) {
+			
+			double time = System.currentTimeMillis();
+			
 			for (int x = 0; x < Scene.mainCamera.resolutionX; x++) {
 				for (int y = 0; y < Scene.mainCamera.resolutionY; y ++) {
 					Rayd ray = Scene.mainCamera.ray(x / (double) supersamplingFactor, y / (double) supersamplingFactor);
@@ -70,8 +73,12 @@ public class RayTracer
 				}
 			}
 			
+			System.out.println("Single Threaded on CPU");
+			System.out.println("Render time: " + (System.currentTimeMillis() - time));
+			
 		// MULTI-THREADED RENDERING
 		} else { 
+			
 			// schedule samples to be rendered
 			ImageSampleThreadScheduler scheduler = new ImageSampleThreadScheduler(threadCount, FSAAsuperImage);
 			int threadImageSampleSizeW = Scene.mainCamera.resolutionX / threadCount;
@@ -92,8 +99,11 @@ public class RayTracer
 					}
 				}
 			}
+			
 			ThreadedRenderStats stats = scheduler.renderAll();
-			System.out.println("Render time: "  + stats.renderTime);
+			System.out.println("Multithreading (" + threadCount + " x Threads [CPU])");
+			System.out.println("Render time: "  + stats.renderTime + "ms");
+			
 		}
 		
 		// only down sample if the factor is not 1

@@ -35,7 +35,7 @@ public class RenderBuffer
 	 * @param y
 	 * @param argb
 	 */
-	public synchronized void setPixel(int x, int y, Color3d pixel)
+	public void setPixel(int x, int y, Color3d pixel)
 	{
 		raster.setSample(x, y, 0, (int) pixel.r());
 		raster.setSample(x, y, 1, (int) pixel.g());
@@ -50,7 +50,7 @@ public class RenderBuffer
 	 * @param y
 	 * @return
 	 */
-	public synchronized Color3d getPixel(int x, int y) {
+	public Color3d getPixel(int x, int y) {
 		int[] pixel = new int[4];
 		raster.getPixel(x, y, pixel);
 		return new Color3d(pixel[0], pixel[1], pixel[2]);

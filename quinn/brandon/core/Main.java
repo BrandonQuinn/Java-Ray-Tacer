@@ -15,7 +15,7 @@ public class Main
 	public static int WIDTH = 640;
 	public static int HEIGHT = 640;
 	public static int FSAA_FACTOR = 4;
-	public static int THREAD_COUNT = 4;
+	public static int THREAD_COUNT = 8;
 	
 	public static void main(String args[]) 
 	{

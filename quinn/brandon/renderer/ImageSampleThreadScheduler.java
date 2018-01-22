@@ -46,6 +46,8 @@ public class ImageSampleThreadScheduler
 	 */
 	public ThreadedRenderStats renderAll()
 	{
+		stats.renderTime = System.currentTimeMillis();
+		
 		while(!scheduleQueue.isEmpty()) {
 			// wait for a free thread
 			ImageSampleRenderThread thread = waitForFreeThread();
@@ -55,6 +57,7 @@ public class ImageSampleThreadScheduler
 		// wait for threads to complete
 		waitToFinish();
 		
+		stats.renderTime = System.currentTimeMillis() - stats.renderTime;
 		return stats;
 	}
 	

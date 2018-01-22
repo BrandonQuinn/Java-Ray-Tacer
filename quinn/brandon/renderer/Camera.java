@@ -48,7 +48,7 @@ public class Camera
 	private Vector3d rayDirection = new Vector3d(0.0, 0.0, 0.0);
 	private Vector3d rayDestination = new Vector3d(0.0, 0.0, 0.0);
 	
-	public synchronized Rayd ray(double x, double y)
+	public Rayd ray(double x, double y)
 	{
 		Rayd ray = new Rayd();
 		

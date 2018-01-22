@@ -61,6 +61,5 @@ public class ImageSampleRenderThread implements Runnable
 		done = true;
 		time = System.currentTimeMillis() - time;
 		stats.totalTimeInThread[threadID] += time;
-		stats.renderTime += time;
 	}
 }
