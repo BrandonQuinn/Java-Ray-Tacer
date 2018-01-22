@@ -19,8 +19,7 @@ public class InfinitePlane extends Volume
 {
 	public Vector3d direction = new Vector3d(0.0, 1.0, 0.0);
 	
-	@Override
-	public Color3d hit(Rayd ray)
+	@Override public Color3d hit(Rayd ray)
 	{
 		Planed plane = new Planed(location, direction);
 		double intersection = Intersectiond.intersectRayPlane(ray, plane, 0.01);

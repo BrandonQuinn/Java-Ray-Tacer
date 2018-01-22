@@ -1,4 +1,4 @@
-package quinn.brandon.renderer;
+package quinn.brandon.core;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -23,8 +23,7 @@ public class RenderCanvas extends Canvas
 		setSize(image.getWidth(), image.getHeight());
 	}
 	
-	@Override
-	public void paint(Graphics g)
+	@Override public void paint(Graphics g)
 	{
 		g.drawImage(image, 0, 0, null);
 	}

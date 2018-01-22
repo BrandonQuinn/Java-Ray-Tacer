@@ -52,7 +52,7 @@ public class Scene
 		InfinitePlane plane = new InfinitePlane();
 		plane.location = new Vector3d(320.0, 320.0, 600.0);
 		plane.direction = new Vector3d(0.0, 0.0, -1.0).normalize();
-		plane.color = new Color3d(230, 230, 230);
+		plane.color = new Color3d(220, 220, 255);
 		addVolume(plane);
 		
 		// add a couple of spheres
