@@ -35,12 +35,25 @@ public class RenderBuffer
 	 * @param y
 	 * @param argb
 	 */
-	public void setPixel(int x, int y, Color3d pixel)
+	public synchronized void setPixel(int x, int y, Color3d pixel)
 	{
 		raster.setSample(x, y, 0, (int) pixel.r());
 		raster.setSample(x, y, 1, (int) pixel.g());
 		raster.setSample(x, y, 2, (int) pixel.b());
 		raster.setSample(x, y, 3, 255);
+	}
+	
+	/**
+	 * Return the colour of the selected pixel.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public synchronized Color3d getPixel(int x, int y) {
+		int[] pixel = new int[4];
+		raster.getPixel(x, y, pixel);
+		return new Color3d(pixel[0], pixel[1], pixel[2]);
 	}
 	
 	/**
@@ -67,7 +80,6 @@ public class RenderBuffer
 						average.z += sample[sx][sy][2];
 					}
 				}
-				
 				average.x /= supersamplingFactor * supersamplingFactor;
 				average.y /= supersamplingFactor * supersamplingFactor;
 				average.z /= supersamplingFactor * supersamplingFactor;
@@ -87,6 +99,4 @@ public class RenderBuffer
 	{
 		return image;
 	}
-
-
 }

@@ -1,6 +1,5 @@
 package quinn.brandon.renderer;
 
-import org.joml.Planed;
 import org.joml.Rayd;
 import org.joml.Vector3d;
 
@@ -38,7 +37,7 @@ public class Camera
 	/*
 	 * The projection plane as a rectangle in space.
 	 */
-	private Planed nearPlane = new Planed(new Vector3d(origin.x, origin.y, 0.0), direction);
+	// private Planed nearPlane = new Planed(new Vector3d(origin.x, origin.y, 0.0), direction);
 	
 	/*
 	 * Enabled/disable orthographic view. Orthographic meaning rays shoot not from the
@@ -49,7 +48,7 @@ public class Camera
 	private Vector3d rayDirection = new Vector3d(0.0, 0.0, 0.0);
 	private Vector3d rayDestination = new Vector3d(0.0, 0.0, 0.0);
 	
-	public Rayd ray(double x, double y)
+	public synchronized Rayd ray(double x, double y)
 	{
 		Rayd ray = new Rayd();
 		

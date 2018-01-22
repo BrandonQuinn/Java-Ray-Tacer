@@ -1,5 +1,12 @@
 package quinn.brandon.core;
 
+/***************************************************************************************
+ * @author Brandon Quinn
+ * @since 21 Jan 2018
+ * 
+ * Licenced under the MIT License.
+ ***************************************************************************************/
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.WindowEvent;

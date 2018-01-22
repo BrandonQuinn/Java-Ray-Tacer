@@ -9,6 +9,7 @@ package quinn.brandon.scene;
 
 import java.util.ArrayList;
 import org.joml.Vector3d;
+import quinn.brandon.renderer.Camera;
 import quinn.brandon.renderer.Color3d;
 import quinn.brandon.renderer.InfinitePlane;
 import quinn.brandon.renderer.Light;
@@ -18,7 +19,10 @@ import quinn.brandon.renderer.Volume;
 
 public class Scene
 {
-	public static final int WORLD_SIZE = 64;
+	/**
+	 * The main camera.
+	 */
+	public static volatile Camera mainCamera = new Camera();
 	
 	/**
 	 * Aribitrary volumes in space.
@@ -36,7 +40,7 @@ public class Scene
 			for (int j = 0; j < 5; j++) { 
 				PointLight light3 = new PointLight();
 				light3.location = new Vector3d(20 + i * 100, 20 + j * 100, 580);
-				lights.add(light3);
+				addLight(light3);
 			}
 		}
 		
@@ -44,24 +48,24 @@ public class Scene
 		plane.location = new Vector3d(320.0, 320.0, 600.0);
 		plane.direction = new Vector3d(0.0, 0.0, -1.0).normalize();
 		plane.color = new Color3d(230, 230, 230);
-		volumes.add(plane);
+		addVolume(plane);
 		
 		// add a couple of spheres
 		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 310.0, 60.0));
 		sphere1.color = new Color3d(255, 100, 100);
-		volumes.add(sphere1);
+		addVolume(sphere1);
 		
 		Sphere sphere2 = new Sphere(40.0, new Vector3d(310.0, 220.0, 60.0));
 		sphere2.color = new Color3d(100, 100, 255);
-		volumes.add(sphere2);
+		addVolume(sphere2);
 		
 		PointLight light = new PointLight();
 		light.location = new Vector3d(305.0, 260.0, 30.0);
-		lights.add(light);
+		addLight(light);
 		
 		PointLight light2 = new PointLight();
 		light2.location = new Vector3d(305.0, 220.0, 37.0);
-		lights.add(light2);
+		addLight(light2);
 	}
 	
 	/**

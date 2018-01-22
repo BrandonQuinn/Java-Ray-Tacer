@@ -10,7 +10,6 @@
 - Depth testing (keeping track of closest object)
 - Perspective-correct interpolation
 - Camera/frustum rotation
-- Multi-threading
 - Ambient lighting
 - Multiple light intensity & colour interpolation
 - Quad and tri hit detection

@@ -1,5 +1,12 @@
 package quinn.brandon.renderer;
 
+/***************************************************************************************
+ * @author Brandon Quinn
+ * @since 22 Jan 2018
+ * 
+ * Licenced under the MIT License.
+ ***************************************************************************************/
+
 import java.util.ArrayList;
 import org.joml.Intersectiond;
 import org.joml.Planed;

@@ -8,7 +8,9 @@ package quinn.brandon.renderer;
  ***************************************************************************************/
 
 import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 import org.joml.Rayd;
+import quinn.brandon.renderer.stats.ThreadedRenderStats;
 import quinn.brandon.scene.Scene;
 
 /**
@@ -17,17 +19,34 @@ import quinn.brandon.scene.Scene;
  */
 public class RayTracer
 {
-	private Camera camera;
-	private int supersamplingFactor;
+	/**
+	 * Factor to upscale the render image by for FSAA.
+	 */
+	private int supersamplingFactor = 1;
 	
-	public RayTracer(int width, int height, int supersamplingFactor)
+	/**
+	 * Number of thread to render the image with.
+	 */
+	private int threadCount = 1;
+	
+	/**
+	 * Create an instance of the ray tracer with all the parameters needed for it to know
+	 * how to render the image.
+	 * 
+	 * @param width
+	 * @param height
+	 * @param supersamplingFactor
+	 * @param threadCount
+	 */
+	public RayTracer(int width, int height, int supersamplingFactor, int threadCount)
 	{
 		this.supersamplingFactor = supersamplingFactor;
-		camera = new Camera();
-		camera.resolutionX = width * supersamplingFactor;
-		camera.resolutionY = height * supersamplingFactor;
-		camera.projectionPlaneWidth = width;
-		camera.projectionPlaneHeight = height;
+		Scene.mainCamera = new Camera();
+		Scene.mainCamera.resolutionX = width * supersamplingFactor;
+		Scene.mainCamera.resolutionY = height * supersamplingFactor;
+		Scene.mainCamera.projectionPlaneWidth = width;
+		Scene.mainCamera.projectionPlaneHeight = height;
+		this.threadCount = threadCount;
 	}
 	
 	/**
@@ -37,16 +56,44 @@ public class RayTracer
 	 */
 	public BufferedImage render()
 	{
-		RenderBuffer FSAAsuperImage = new RenderBuffer(camera.resolutionX, camera.resolutionY);
+		RenderBuffer FSAAsuperImage = new RenderBuffer(Scene.mainCamera.resolutionX, Scene.mainCamera.resolutionY);
 		
-		for (int x = 0; x < camera.resolutionX; x++) {
-			for (int y = 0; y < camera.resolutionY; y++) {
-				Rayd ray = camera.ray(x / (double) supersamplingFactor, y / (double) supersamplingFactor);
-				for (Volume volume : Scene.volumes()) {
-					Color3d color = volume.hit(ray);
-					if (color != null) FSAAsuperImage.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
+		// SINGLE THREADED RENDERING
+		if (threadCount <= 1) {
+			for (int x = 0; x < Scene.mainCamera.resolutionX; x++) {
+				for (int y = 0; y < Scene.mainCamera.resolutionY; y ++) {
+					Rayd ray = Scene.mainCamera.ray(x / (double) supersamplingFactor, y / (double) supersamplingFactor);
+					for (Volume volume : Scene.volumes()) {
+						Color3d color = volume.hit(ray);
+						if (color != null) FSAAsuperImage.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
+					}
 				}
 			}
+			
+		// MULTI-THREADED RENDERING
+		} else { 
+			// schedule samples to be rendered
+			ImageSampleThreadScheduler scheduler = new ImageSampleThreadScheduler(threadCount, FSAAsuperImage);
+			int threadImageSampleSizeW = Scene.mainCamera.resolutionX / threadCount;
+			int threadImageSampleSizeH = Scene.mainCamera.resolutionY / threadCount;
+			for (int x = 0; x < Scene.mainCamera.resolutionX; x += threadImageSampleSizeW) {
+				for (int y = 0; y < Scene.mainCamera.resolutionY; y += threadImageSampleSizeH) {
+					try {
+						// schedule the sample to render
+						ImageSample newSample = new ImageSample(x, y, threadImageSampleSizeW, threadImageSampleSizeH, supersamplingFactor);
+						scheduler.scheduleSample(newSample);
+					} catch (IllegalStateException e) {
+						JOptionPane.showMessageDialog(null, "Too many samples are being computed.\nIncrease THREAD_IMAGE_SAMPLE_SIZE", 
+								"Too many samples.", JOptionPane.ERROR_MESSAGE);
+						System.exit(0);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			ThreadedRenderStats stats = scheduler.renderAll();
+			System.out.println("Render time: "  + stats.renderTime);
 		}
 		
 		// only down sample if the factor is not 1

@@ -15,11 +15,15 @@ public class Main
 	public static int WIDTH = 640;
 	public static int HEIGHT = 640;
 	public static int FSAA_FACTOR = 4;
+	public static int THREAD_COUNT = 4;
 	
 	public static void main(String args[]) 
 	{
 		WaitingDialog.start();
-		RayTracer rayTracer = new RayTracer(WIDTH, HEIGHT, FSAA_FACTOR);
+		RayTracer rayTracer = new RayTracer(
+				WIDTH, HEIGHT, FSAA_FACTOR, 
+				THREAD_COUNT
+		);
 		BufferedImage image = rayTracer.render();
 		WaitingDialog.stop();
 		
