@@ -60,7 +60,7 @@ public class Sphere extends Volume
 	
 	/**
 	 * Returns null if the ray doesn't hit any volumes in the world.
-	 * If it does hit an object it will then get the position and check lighting and
+	 * If it does hit an object it will then get the location and check lighting and
 	 * run extra rays out in to the world for reflections, lighting, caustics etc.
 	 * 
 	 * @param ray The ray shooting out from which ever pixel on the screen view.
@@ -73,9 +73,9 @@ public class Sphere extends Volume
 		// forced to possibly lose some precision because the JOML library does not provide a
 		// Intersectiond.intersectRaySphere that takes in a Sphered
 		Spheref sphere = new Spheref(
-				(float) location().x, 
-				(float) location().y, 
-				(float) location().z, 
+				(float) location.x, 
+				(float) location.y, 
+				(float) location.z, 
 				(float) radius);
 		
 		if (Intersectiond.intersectRaySphere(ray, sphere, hitDists))
@@ -94,7 +94,7 @@ public class Sphere extends Volume
 			}
 			
 			// multiply all light intensities
-			Color3d result = new Color3d(color().r(), color().g(), color().b());
+			Color3d result = new Color3d(color.r(), color.g(), color.b());
 			Color3d addedIntensities = new Color3d(0, 0, 0);
 			for (int l = 0; l < lightIntensities.size(); l++) {
 				addedIntensities.x += lightIntensities.get(l).x;

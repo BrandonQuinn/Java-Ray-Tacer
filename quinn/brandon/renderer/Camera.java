@@ -46,11 +46,6 @@ public class Camera
 	 */
 	public boolean orthographic = true;
 	
-	public Camera()
-	{
-
-	}
-	
 	private Vector3d rayDirection = new Vector3d(0.0, 0.0, 0.0);
 	private Vector3d rayDestination = new Vector3d(0.0, 0.0, 0.0);
 	

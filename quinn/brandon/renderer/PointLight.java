@@ -18,7 +18,7 @@ public class PointLight extends Light
 	public double quadraticAttenuation = 1.0f;
 	
 	/**
-	 * Create a line from the start position given and the location of the light
+	 * Create a line from the start location given and the location of the light
 	 * and check the distance. Use the inverse of the square of the distance to calculate
 	 * the intensity of the light.
 	 * 
@@ -27,13 +27,15 @@ public class PointLight extends Light
 	@Override public Color3d hit(Vector3d start)
 	{
 		for (Volume volume : Scene.volumes()) {
-			boolean intersects = Intersectiond.testLineSegmentSphere(start, location, volume.location(), ((Sphere) volume).radius());
-			if (volume instanceof Sphere && !intersects) {
-				double distance = start.distance(location);
-				double intensity = (1.0 / (distance * distance));
-				Vector3d c = new Vector3d(color.getRed(), color.getGreen(), color.getBlue());
-				c = c.mul(intensity);
-				return new Color3d(c.x, c.y, c.z);
+			if (volume instanceof Sphere) {
+				boolean intersects = Intersectiond.testLineSegmentSphere(start, location, volume.location, ((Sphere) volume).radius());
+				if (!intersects) {
+					double distance = start.distance(location);
+					double intensity = (1.0 / (distance * distance));
+					Vector3d c = new Vector3d(color.getRed(), color.getGreen(), color.getBlue());
+					c = c.mul(intensity);
+					return new Color3d(c.x, c.y, c.z);
+				}
 			}
 		}
 		

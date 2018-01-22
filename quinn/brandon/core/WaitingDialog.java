@@ -1,5 +1,10 @@
 package quinn.brandon.core;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 /***************************************************************************************
  * @author Brandon Quinn
  * @since 21 Jan 2018
@@ -9,10 +14,11 @@ package quinn.brandon.core;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class WaitingDialog implements Runnable
+public class WaitingDialog implements Runnable, WindowListener
 {
-	private static volatile JFrame frame = new JFrame("Running Ray Tracer...");
+	private static volatile JFrame frame = new JFrame("Rendering");
 	
 	public static void start()
 	{
@@ -29,9 +35,55 @@ public class WaitingDialog implements Runnable
 	@Override
 	public void run()
 	{
-		frame.setSize(200, 100);
+		frame.setSize(260, 100);
+		frame.setLayout(new GridLayout(1, 3));
 		frame.setLocationRelativeTo(null);
-		frame.add(new JLabel("Rendering..."));
+		frame.add(new JPanel());
+		frame.add(new JLabel("Tracing rays..."), BorderLayout.CENTER);
+		frame.add(new JPanel());
+		frame.addWindowListener(this);
 		frame.setVisible(true);
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e)
+	{
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e)
+	{
+
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(0);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e)
+	{
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e)
+	{
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e)
+	{
+
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e)
+	{
+
 	}
 }

@@ -10,6 +10,7 @@ package quinn.brandon.scene;
 import java.util.ArrayList;
 import org.joml.Vector3d;
 import quinn.brandon.renderer.Color3d;
+import quinn.brandon.renderer.InfinitePlane;
 import quinn.brandon.renderer.Light;
 import quinn.brandon.renderer.PointLight;
 import quinn.brandon.renderer.Sphere;
@@ -30,13 +31,28 @@ public class Scene
 	private static volatile ArrayList<Light> lights = new ArrayList<Light>(1);
 	
 	static {
+		
+		for (int i = 0; i < 5; i++) { 
+			for (int j = 0; j < 5; j++) { 
+				PointLight light3 = new PointLight();
+				light3.location = new Vector3d(20 + i * 100, 20 + j * 100, 580);
+				lights.add(light3);
+			}
+		}
+		
+		InfinitePlane plane = new InfinitePlane();
+		plane.location = new Vector3d(320.0, 320.0, 600.0);
+		plane.direction = new Vector3d(0.0, 0.0, -1.0).normalize();
+		plane.color = new Color3d(230, 230, 230);
+		volumes.add(plane);
+		
 		// add a couple of spheres
 		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 310.0, 60.0));
-		sphere1.setColor(new Color3d(255, 100, 100));
+		sphere1.color = new Color3d(255, 100, 100);
 		volumes.add(sphere1);
 		
 		Sphere sphere2 = new Sphere(40.0, new Vector3d(310.0, 220.0, 60.0));
-		sphere2.setColor(new Color3d(100, 100, 255));
+		sphere2.color = new Color3d(100, 100, 255);
 		volumes.add(sphere2);
 		
 		PointLight light = new PointLight();

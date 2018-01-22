@@ -12,8 +12,8 @@ import org.joml.Vector3d;
 
 public abstract class Volume
 {
-	private Vector3d position = new Vector3d();
-	private Color3d color = new Color3d(10.0, 10.0, 10.0);
+	public Vector3d location = new Vector3d();
+	public Color3d color = new Color3d(10.0, 10.0, 10.0);
 	
 	public Volume()
 	{
@@ -22,7 +22,7 @@ public abstract class Volume
 	
 	public Volume(Vector3d position)
 	{
-		setPosition(position);
+		this.location = position;
 	}
 	
 	public Volume(double x, double y, double z)
@@ -39,17 +39,7 @@ public abstract class Volume
 	public abstract Color3d hit(Rayd ray);
 	
 	/**
-	 * Set the position to another position vector.
-	 * 
-	 * @param position
-	 */
-	public void setPosition(Vector3d position) 
-	{
-		this.position = position;
-	}
-	
-	/**
-	 * Set the position based on individual dimensions.
+	 * Set the location based on individual dimensions.
 	 * 
 	 * @param x
 	 * @param y
@@ -57,38 +47,8 @@ public abstract class Volume
 	 */
 	public void setPosition(double x, double y, double z)
 	{
-		position.x = x;
-		position.y = y;
-		position.z = z;
-	}
-	
-	/**
-	 * Return the position vector.
-	 * 
-	 * @return
-	 */
-	public Vector3d location()
-	{
-		return position;
-	}
-	
-	/**
-	 * Set the colour of the volume.
-	 * 
-	 * @param color
-	 */
-	public void setColor(Color3d color)
-	{
-		this.color = color;
-	}
-	
-	/**
-	 * Return the colour of the volume.
-	 * 
-	 * @return
-	 */
-	public Color3d color()
-	{
-		return color;
+		location.x = x;
+		location.y = y;
+		location.z = z;
 	}
 }

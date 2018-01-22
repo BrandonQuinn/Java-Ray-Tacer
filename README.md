@@ -1,12 +1,25 @@
+## Features
+
+- Supported volumes: spheres, infinite plane
+- Multiple point lights
+- Point lights (inverse square intensity)
+- Orthographic camera
+
 ## TODO
 
-- Perspective-Correct Interpolation
-- Z-Depth Test for Overlapping Volumes to Get Nearest
-- Ambient Lighting
-- Multiple Light Intensity & Colour Interpolation
-- Quad and Tri Hit Detection
-- Point Light Variability (Intensity, Attenuation, Range)
+- Depth testing (keeping track of closest object)
+- Perspective-correct interpolation
+- Camera/frustum rotation
+- Multi-threading
+- Ambient lighting
+- Multiple light intensity & colour interpolation
+- Quad and tri hit detection
+- Point light variability (intensity, attenuation, range)
 
 ## Dependencies 
 
 - JOML-1.9.7 (OpenGL 3D Mathematics Library)
+
+## Current scene
+
+![Sorry no image!](https://i.imgur.com/uEzGPcK.png)
