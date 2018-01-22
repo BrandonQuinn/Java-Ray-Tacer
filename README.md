@@ -4,6 +4,7 @@
 - Multiple point lights
 - Point lights (inverse square intensity)
 - Orthographic camera
+- Multi-threaded rendering (CPU)
 
 ## TODO
 
