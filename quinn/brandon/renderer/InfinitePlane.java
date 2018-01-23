@@ -19,18 +19,21 @@ public class InfinitePlane extends Volume
 {
 	public Vector3d direction = new Vector3d(0.0, 1.0, 0.0);
 	
-	@Override public Color3d hit(Rayd ray)
+	@Override public VolumeHitData hit(Rayd ray)
 	{
+		VolumeHitData hit = new VolumeHitData();
 		Planed plane = new Planed(location, direction);
 		double intersection = Intersectiond.intersectRayPlane(ray, plane, 0.01);
+		
 		if (intersection != -1.0) {
-			Vector3d hitLocation = new Vector3d(ray.dX, ray.dY, ray.dZ).mul(intersection).add(new Vector3d(ray.oX, ray.oY, ray.oZ));
+			hit.location = new Vector3d(ray.dX, ray.dY, ray.dZ).mul(intersection).add(new Vector3d(ray.oX, ray.oY, ray.oZ));
+			hit.distanceFromOrigin = hit.location.distance(new Vector3d(ray.oX, ray.oY, ray.oZ));
 			Color3d result = new Color3d(color.x, color.y, color.z);
 			
 			// go through each light and get the intensity
 			ArrayList<Color3d> lightIntensities = new ArrayList<Color3d>();
 			for (Light light: Scene.lights()) {
-				Color3d C = light.hit(hitLocation);
+				Color3d C = light.hit(hit.location);
 				if (C != null) lightIntensities.add(C);
 			}
 			
@@ -46,7 +49,9 @@ public class InfinitePlane extends Volume
 			result.x = MathUtil.clamp(result.x, 0, 255);
 			result.y = MathUtil.clamp(result.y, 0, 255);
 			result.z = MathUtil.clamp(result.z, 0, 255);
-			return result;
+			
+			hit.color = result;
+			return hit;
 		}
 		
 		return null;

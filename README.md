@@ -2,19 +2,18 @@
 
 - Supported volumes: spheres, infinite plane
 - Multiple point lights
-- Point lights (inverse square intensity)
+- Point lights (inverse square intensity w/ quadratic attenutation)
 - Orthographic camera
 - Multi-threaded rendering (CPU)
+- FSAA (Full-screen anti-aliasing)
 
 ## TODO
 
-- Depth testing (keeping track of closest object)
 - Perspective-correct interpolation
 - Camera/frustum rotation
 - Ambient lighting
-- Multiple light intensity & colour interpolation
 - Quad and tri hit detection
-- Point light variability (intensity, attenuation, range)
+- Point light variability (intensity, range)
 
 ## Dependencies 
 

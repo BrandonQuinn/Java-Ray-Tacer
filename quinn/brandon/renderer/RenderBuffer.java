@@ -31,9 +31,9 @@ public class RenderBuffer
 	/**
 	 * Change the colour and transparency of the selected pixel.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param argb
+	 * @param x x position
+	 * @param y y position
+	 * @param pixel Colour to set the pixel to
 	 */
 	public void setPixel(int x, int y, Color3d pixel)
 	{
@@ -46,9 +46,9 @@ public class RenderBuffer
 	/**
 	 * Return the colour of the selected pixel.
 	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 * @param x x position
+	 * @param y y position
+	 * @return Colour at the given pixel
 	 */
 	public Color3d getPixel(int x, int y) {
 		int[] pixel = new int[4];
@@ -59,8 +59,8 @@ public class RenderBuffer
 	/**
 	 * For every pixel we are going to merge it with surrounding pixels in to one by the sampling factor.
 	 * 
-	 * @param supersamplingFactor
-	 * @return
+	 * @param supersamplingFactor Factor 2 download sample by
+	 * @return Final rendered image
 	 */
 	public RenderBuffer downSample(int supersamplingFactor)
 	{
@@ -93,7 +93,7 @@ public class RenderBuffer
 	/**
 	 * Return the image associated with this buffer.
 	 * 
-	 * @return
+	 * @return Image
 	 */
 	public BufferedImage image()
 	{

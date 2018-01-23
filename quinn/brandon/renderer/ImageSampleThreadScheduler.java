@@ -40,7 +40,7 @@ public class ImageSampleThreadScheduler
 	
 	/**
 	 * Add an image sample to render
-	 * @param sample
+	 * @param sample Sample of the image to render
 	 * @throws InterruptedException 
 	 */
 	public void scheduleSample(ImageSample sample) throws IllegalStateException, InterruptedException
@@ -56,7 +56,7 @@ public class ImageSampleThreadScheduler
 		stats.renderTime = System.currentTimeMillis();
 		
 		while(!scheduleQueue.isEmpty()) {
-			// wait for a free thread
+			// wait for a free thread the nstart it with the next item in the queue
 			ImageSampleRenderThread thread = waitForFreeThread();
 			thread.render(scheduleQueue.poll());
 		}
@@ -79,7 +79,6 @@ public class ImageSampleThreadScheduler
 			for (int i = 0; i < threadCount; i++) { 
 				if (threadPool[i].done) freeThreads++;
 			}
-			
 			if (freeThreads == threadCount) return;
 		}
 	}
@@ -87,7 +86,7 @@ public class ImageSampleThreadScheduler
 	/**
 	 * Halts execution and returns the first free thread it finds.
 	 * 
-	 * @return
+	 * @return Returns a thread that is free to start
 	 */
 	public ImageSampleRenderThread waitForFreeThread()
 	{

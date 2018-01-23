@@ -31,13 +31,13 @@ public class ImageSampleRenderThread implements Runnable
 	/**
 	 * Render the sample to the destination render buffer.
 	 * 
-	 * @param sample
+	 * @param sample Sample to render
 	 */
 	public void render(ImageSample sample)
 	{
 		if (done) {
-			time = System.currentTimeMillis();
 			done = false;
+			time = System.currentTimeMillis();
 			this.sample = sample;
 			Thread thread = new Thread(this);
 			thread.setName("Render Thread " + threadID);
@@ -51,15 +51,19 @@ public class ImageSampleRenderThread implements Runnable
 		for (int x = sample.x; x < sample.x + sample.width; x++) {
 			for (int y = sample.y; y < sample.y + sample.height; y++) {
 				Rayd ray = Scene.mainCamera.ray(x / (double) sample.FSAAfactor, y / (double) sample.FSAAfactor);
+				VolumeHitData closestHit = null;
 				for (Volume volume : Scene.volumes()) {
-					Color3d color = volume.hit(ray);
-					if (color != null) dest.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
+					VolumeHitData hit = volume.hit(ray);
+					if (hit != null && (closestHit == null || hit.distanceFromOrigin < closestHit.distanceFromOrigin)) {
+						closestHit = hit;
+					}
 				}
+				if (closestHit != null) dest.setPixel(x, y, new Color3d(closestHit.color.r(), closestHit.color.g(), closestHit.color.b()));
 			}
 		}
 		
-		done = true;
 		time = System.currentTimeMillis() - time;
 		stats.totalTimeInThread[threadID] += time;
+		done = true;
 	}
 }

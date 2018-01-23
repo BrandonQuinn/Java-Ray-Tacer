@@ -55,6 +55,12 @@ public class Scene
 		plane.color = new Color3d(220, 220, 255);
 		addVolume(plane);
 		
+		InfinitePlane planeleft = new InfinitePlane();
+		planeleft.location = new Vector3d(0.0, 320.0, 500.0);
+		planeleft.direction = new Vector3d(1.0, 0.0, -0.9).normalize();
+		planeleft.color = new Color3d(220, 220, 0);
+		addVolume(planeleft);
+		
 		// add a couple of spheres
 		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 310.0, 60.0));
 		sphere1.color = new Color3d(255, 100, 100);

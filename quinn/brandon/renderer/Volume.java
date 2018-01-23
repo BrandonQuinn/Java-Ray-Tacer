@@ -33,17 +33,17 @@ public abstract class Volume
 	/**
 	 * Check if the ray hits the object and return the point at which it was hit.
 	 * 
-	 * @param ray
-	 * @return
+	 * @param ray The ray to check if it hits the volume
+	 * @return The colour surface hit
 	 */
-	public abstract Color3d hit(Rayd ray);
+	public abstract VolumeHitData hit(Rayd ray);
 	
 	/**
 	 * Set the location based on individual dimensions.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param z
+	 * @param x x position
+	 * @param y y position
+	 * @param z z position
 	 */
 	public void setPosition(double x, double y, double z)
 	{

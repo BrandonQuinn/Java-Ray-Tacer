@@ -25,21 +25,42 @@ public class Color3d extends Vector3d
 		z = b;
 	}
 	
+	/**
+	 * Red colour component.
+	 * 
+	 * @return red
+	 */
 	public double r()
 	{
 		return x;
 	}
 	
+	/**
+	 * Green colour component.
+	 * 
+	 * @return green
+	 */
 	public double g()
 	{
 		return y;
 	}
 	
+	/**
+	 * Blue colour component.
+	 * 
+	 * @return blue
+	 */
 	public double b()
 	{
 		return z;
 	}
 	
+	/**
+	 * Is this colour equal to the given one.
+	 * 
+	 * @param color Colour to check with
+	 * @return Is equal?
+	 */
 	public boolean equals(Color3d color)
 	{
 		if (x == color.x && y == color.y && z == color.z) return true;

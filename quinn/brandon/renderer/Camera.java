@@ -55,6 +55,15 @@ public class Camera
 	private Vector3d rayDirection = new Vector3d(0.0, 0.0, 0.0);
 	private Vector3d rayDestination = new Vector3d(0.0, 0.0, 0.0);
 	
+	
+	/**
+	 * Cast a ray out from the origin of the camera or directory straight out from behind
+	 * towards to given x, y coordinate on the near plane.
+	 * 
+	 * @param x x position on the perspective plane
+	 * @param y y position on the perspective plane
+	 * @return The ray
+	 */
 	public Rayd ray(double x, double y)
 	{
 		Rayd ray = new Rayd();

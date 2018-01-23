@@ -73,8 +73,9 @@ public class Sphere extends Volume
 	 * @param ray The ray shooting out from which ever pixel on the screen view.
 	 * @return The colour corresponding the where the ray hit on the sphere.
 	 */
-	@Override public Color3d hit(Rayd ray)
+	@Override public VolumeHitData hit(Rayd ray)
 	{
+		VolumeHitData hit = new VolumeHitData();
 		Vector2d hitDists = new Vector2d();
 		
 		// forced to possibly lose some precision because the JOML library does not provide a
@@ -92,11 +93,13 @@ public class Sphere extends Volume
 			Vector3d hitPoint = new Vector3d(ray.dX, ray.dY, ray.dZ);
 			hitPoint.mul(closest);
 			hitPoint.add(new Vector3d(ray.oX, ray.oY, ray.oZ));
-
+			hit.location = hitPoint;
+			hit.distanceFromOrigin = hit.location.distance(new Vector3d(ray.oX, ray.oY, ray.oZ));
+			
 			// go through each light and get the intensity
 			ArrayList<Color3d> lightIntensities = new ArrayList<Color3d>();
 			for (Light light: Scene.lights()) {
-				Color3d C = light.hit(hitPoint);
+				Color3d C = light.hit(hit.location);
 				if (C != null) lightIntensities.add(C);
 			}
 			
@@ -114,7 +117,8 @@ public class Sphere extends Volume
 			result.y = MathUtil.clamp(result.y, 0, 255);
 			result.z = MathUtil.clamp(result.z, 0, 255);
 
-			return result;
+			hit.color = result;
+			return hit;
 		}
 		
 		return null;

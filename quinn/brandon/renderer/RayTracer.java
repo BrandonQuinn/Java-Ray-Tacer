@@ -33,10 +33,10 @@ public class RayTracer
 	 * Create an instance of the ray tracer with all the parameters needed for it to know
 	 * how to render the image.
 	 * 
-	 * @param width
-	 * @param height
-	 * @param supersamplingFactor
-	 * @param threadCount
+	 * @param width Width of image
+	 * @param height Height of image 
+	 * @param supersamplingFactor FSAA super sampling factor
+	 * @param threadCount Number of thread to render with
 	 */
 	public RayTracer(int width, int height, int supersamplingFactor, int threadCount)
 	{
@@ -52,7 +52,7 @@ public class RayTracer
 	/**
 	 * Start the ray tracer and when done return the final image.
 	 * 
-	 * @return
+	 * @return Final rendered image
 	 */
 	public BufferedImage render()
 	{
@@ -67,8 +67,8 @@ public class RayTracer
 				for (int y = 0; y < Scene.mainCamera.resolutionY; y ++) {
 					Rayd ray = Scene.mainCamera.ray(x / (double) supersamplingFactor, y / (double) supersamplingFactor);
 					for (Volume volume : Scene.volumes()) {
-						Color3d color = volume.hit(ray);
-						if (color != null) FSAAsuperImage.setPixel(x, y, new Color3d(color.r(), color.g(), color.b()));
+						VolumeHitData hit = volume.hit(ray);
+						if (hit != null) FSAAsuperImage.setPixel(x, y, new Color3d(hit.color.r(), hit.color.g(), hit.color.b()));
 					}
 				}
 			}

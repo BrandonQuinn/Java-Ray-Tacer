@@ -12,8 +12,8 @@ public abstract class Light
 	 * Get the intensity of the light and colour based on
 	 * the inverse square law.
 	 * 
-	 * @param start
-	 * @return
+	 * @param start The point to draw a line from to the light
+	 * @return Intensity of the light at the start point
 	 */
 	public abstract Color3d hit(Vector3d start);
 }

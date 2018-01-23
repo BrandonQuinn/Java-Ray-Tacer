@@ -22,8 +22,7 @@ public class ImageSample
 		this.FSAAfactor = FSAAfactor;
 	}
 	
-	@Override
-	public String toString()
+	@Override public String toString()
 	{
 		return "(x: " + x + ", y: " + y + ", width: " + width + ", height: " + height + ") w/FSAA: " + FSAAfactor;
 	}
