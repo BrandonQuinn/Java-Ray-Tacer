@@ -5,7 +5,7 @@
 - Point lights (inverse square intensity w/ quadratic attenutation)
 - Orthographic camera
 - Multi-threaded rendering (CPU)
-- FSAA (Full-screen anti-aliasing)
+- FSAA (Fullscreen anti-aliasing)
 
 ## TODO
 

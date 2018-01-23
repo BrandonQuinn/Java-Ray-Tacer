@@ -29,11 +29,16 @@ public class Camera
 	 */
 	public double projectionPlaneDistance = 100.0;
 	
+	/**
+	 * Far plane distance.
+	 */
+	public double farPlaneDistance = 1000000.0;
+	
 	/*
 	 * Where rays are shot out from towards the projection plane,
 	 * unless it is rendering in orthographic mode, then rays are sent straight out.
 	 */
-	public Vector3d origin = new Vector3d(resolutionX / 2.0, resolutionY / 2.0, -projectionPlaneDistance);
+	public Vector3d origin = new Vector3d(projectionPlaneWidth / 2.0, projectionPlaneHeight / 2.0, -projectionPlaneDistance);
 	
 	/**
 	 * The direction of the entire camera, so which way to shoot a ray from the origin and the normal
@@ -80,7 +85,7 @@ public class Camera
 		} else {
 			ray.oX = origin.x;
 			ray.oY = origin.y;
-			ray.oZ = origin.z;
+			ray.oZ = -projectionPlaneDistance;
 			
 			// destination on the near plane
 			rayDestination.x = x;
@@ -97,5 +102,22 @@ public class Camera
 		ray.dZ = rayDirection.z;
 		
 		return ray;
+	}
+	
+	/**
+	 * This is a temporary method to convert a world space coordinate
+	 * on to the projection plane using my clunky, naive approach.
+	 * 
+	 * @param point
+	 * @return
+	 */
+	public Vector3d projectPoint(Vector3d point)
+	{
+		Vector3d result = new Vector3d(point.x, point.y, point.z);
+		double far = Double.POSITIVE_INFINITY;
+		double near = projectionPlaneDistance;
+		
+		// TODO: laterz
+		return result;
 	}
 }

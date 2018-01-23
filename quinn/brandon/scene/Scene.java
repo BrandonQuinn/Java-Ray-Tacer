@@ -8,6 +8,7 @@ package quinn.brandon.scene;
  ***************************************************************************************/
 
 import java.util.ArrayList;
+import java.util.Random;
 import org.joml.Vector3d;
 import quinn.brandon.renderer.Camera;
 import quinn.brandon.renderer.Color3d;
@@ -39,12 +40,11 @@ public class Scene
 		for (int i = 0; i < 6; i++) { 
 			for (int j = 0; j < 6; j++) { 
 				PointLight light3 = new PointLight();
-				light3.location = new Vector3d(20 + i * 250, 20 + j * 250, 590);
-				
-				if (i == 3) {
-					light3.color = new Color3d(255, 0, 0);
-				}
-				
+				light3.location = new Vector3d(20 + i * 250, 20 + j * 250, 580);
+				light3.color = new Color3d(
+						(int)(new Random().nextDouble() * 255), 
+						(int)(new Random().nextDouble() * 255), 
+						(int)(new Random().nextDouble() * 255));
 				addLight(light3);
 			}
 		}
@@ -62,11 +62,11 @@ public class Scene
 		addVolume(planeleft);
 		
 		// add a couple of spheres
-		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 310.0, 60.0));
+		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 350.0, 60.0));
 		sphere1.color = new Color3d(255, 100, 100);
 		addVolume(sphere1);
 		
-		Sphere sphere2 = new Sphere(40.0, new Vector3d(310.0, 220.0, 60.0));
+		Sphere sphere2 = new Sphere(80.0, new Vector3d(310.0, 220.0, 60.0));
 		sphere2.color = new Color3d(100, 100, 255);
 		addVolume(sphere2);
 		

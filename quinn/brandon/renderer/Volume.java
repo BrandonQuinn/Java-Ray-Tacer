@@ -12,6 +12,7 @@ import org.joml.Vector3d;
 
 public abstract class Volume
 {
+	public String name = "%%% NULL %%%";
 	public Vector3d location = new Vector3d();
 	public Color3d color = new Color3d(10.0, 10.0, 10.0);
 	

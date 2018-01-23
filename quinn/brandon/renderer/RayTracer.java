@@ -10,6 +10,7 @@ package quinn.brandon.renderer;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
 import org.joml.Rayd;
+import quinn.brandon.math.MathUtil;
 import quinn.brandon.renderer.stats.ThreadedRenderStats;
 import quinn.brandon.scene.Scene;
 
@@ -22,7 +23,7 @@ public class RayTracer
 	/**
 	 * Factor to upscale the render image by for FSAA.
 	 */
-	private int supersamplingFactor = 1;
+	private int FSAA = 1;
 	
 	/**
 	 * Number of thread to render the image with.
@@ -35,15 +36,15 @@ public class RayTracer
 	 * 
 	 * @param width Width of image
 	 * @param height Height of image 
-	 * @param supersamplingFactor FSAA super sampling factor
+	 * @param FSAA FSAA super sampling factor
 	 * @param threadCount Number of thread to render with
 	 */
-	public RayTracer(int width, int height, int supersamplingFactor, int threadCount)
+	public RayTracer(int width, int height, int FSAA, int threadCount)
 	{
-		this.supersamplingFactor = supersamplingFactor;
+		this.FSAA = MathUtil.clamp(FSAA % 2 == 0 ? FSAA : FSAA - 1, 1, 32);
 		Scene.mainCamera = new Camera();
-		Scene.mainCamera.resolutionX = width * supersamplingFactor;
-		Scene.mainCamera.resolutionY = height * supersamplingFactor;
+		Scene.mainCamera.resolutionX = width * FSAA;
+		Scene.mainCamera.resolutionY = height * FSAA;
 		Scene.mainCamera.projectionPlaneWidth = width;
 		Scene.mainCamera.projectionPlaneHeight = height;
 		this.threadCount = threadCount;
@@ -60,12 +61,11 @@ public class RayTracer
 		
 		// SINGLE THREADED RENDERING
 		if (threadCount <= 1) {
-			
 			double time = System.currentTimeMillis();
 			
 			for (int x = 0; x < Scene.mainCamera.resolutionX; x++) {
 				for (int y = 0; y < Scene.mainCamera.resolutionY; y ++) {
-					Rayd ray = Scene.mainCamera.ray(x / (double) supersamplingFactor, y / (double) supersamplingFactor);
+					Rayd ray = Scene.mainCamera.ray(x / (double) FSAA, y / (double) FSAA);
 					for (Volume volume : Scene.volumes()) {
 						VolumeHitData hit = volume.hit(ray);
 						if (hit != null) FSAAsuperImage.setPixel(x, y, new Color3d(hit.color.r(), hit.color.g(), hit.color.b()));
@@ -87,7 +87,7 @@ public class RayTracer
 				for (int y = 0; y < Scene.mainCamera.resolutionY; y += threadImageSampleSizeH) {
 					try {
 						// schedule the sample to render
-						ImageSample newSample = new ImageSample(x, y, threadImageSampleSizeW, threadImageSampleSizeH, supersamplingFactor);
+						ImageSample newSample = new ImageSample(x, y, threadImageSampleSizeW, threadImageSampleSizeH, FSAA);
 						scheduler.scheduleSample(newSample);
 					} catch (IllegalStateException e) {
 						JOptionPane.showMessageDialog(null, "Too many samples are being computed.\nIncrease THREAD_IMAGE_SAMPLE_SIZE", 
@@ -103,12 +103,11 @@ public class RayTracer
 			ThreadedRenderStats stats = scheduler.renderAll();
 			System.out.println("Multithreading (" + threadCount + " x Threads [CPU])");
 			System.out.println("Render time: "  + stats.renderTime + "ms");
-			
 		}
 		
 		// only down sample if the factor is not 1
-		if (supersamplingFactor != 1) {
-			RenderBuffer downSampledImage = FSAAsuperImage.downSample(supersamplingFactor);
+		if (FSAA > 1) {
+			RenderBuffer downSampledImage = FSAAsuperImage.downSample(FSAA);
 			return downSampledImage.image();
 		}
 		
