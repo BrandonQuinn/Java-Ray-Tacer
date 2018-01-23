@@ -8,9 +8,6 @@ package quinn.brandon.core;
  ***************************************************************************************/
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import quinn.brandon.importer.ImportObj;
 import quinn.brandon.renderer.RayTracer;
 
 public class Main
@@ -22,12 +19,6 @@ public class Main
 	
 	public static void main(String args[]) 
 	{
-		
-		// check if the command line had an obj file to give us.
-		try {
-			ImportObj.load(new File(args[0]));
-		} catch (FileNotFoundException e) {}
-		
 		WaitingDialog.start();
 		RayTracer rayTracer = new RayTracer(
 				WIDTH, HEIGHT, 

@@ -60,6 +60,18 @@ public class Scene
 		planeleft.direction = new Vector3d(1.0, 0.0, -0.9).normalize();
 		planeleft.color = new Color3d(220, 220, 0);
 		addVolume(planeleft);
+	
+		PointLight light1 = new PointLight();
+		light1.location = new Vector3d(25.0, 25.0, 15.0);
+		light1.quadraticAttenuation = 0.5;
+		addLight(light1);
+		
+		//Face testface = new Face();
+		//testface.verticies.add(new Vector3d(20, 20, 20));
+		//testface.verticies.add(new Vector3d(30, 30, 20));
+		//testface.verticies.add(new Vector3d(25, 25, 20));
+		//testface.normal = new Vector3d(0, 0, -1);
+		//addVolume(testface);
 		
 		// add a couple of spheres
 		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 350.0, 60.0));

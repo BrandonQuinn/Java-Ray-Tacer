@@ -14,9 +14,15 @@ public class ComplexVolume extends Volume
 {
 	public ArrayList<Face> faces = new ArrayList<Face>();
 
-	@Override public VolumeHitData hit(Rayd ray)
+	@Override public HitData hit(Rayd ray)
 	{
-		// TODO Auto-generated method stub
+		HitData data = new HitData();
+		
+		for (int i = 0; i < faces.size(); i++) {
+			data = faces.get(i).hit(ray);
+			if (data != null) return data;
+		}
+		
 		return null;
 	}
 }

@@ -27,6 +27,7 @@ import quinn.brandon.scene.Scene;
 public class Sphere extends Volume
 {
 	private double radius = 5.0;
+	public Vector3d location = new Vector3d();
 	
 	public Sphere()
 	{
@@ -35,13 +36,13 @@ public class Sphere extends Volume
 	
 	public Sphere(double radius, Vector3d position)
 	{
-		super(position); // no no, just 2 positions in this domain
+		location = position;
 		this.radius = radius;
 	}
 	
 	public Sphere(double radius, double x, double y, double z)
 	{
-		super(x, y, z);
+		location.x = x; location.y = y; location.z = z;
 		this.radius = radius;
 	}
 	
@@ -73,9 +74,9 @@ public class Sphere extends Volume
 	 * @param ray The ray shooting out from which ever pixel on the screen view.
 	 * @return The colour corresponding the where the ray hit on the sphere.
 	 */
-	@Override public VolumeHitData hit(Rayd ray)
+	@Override public HitData hit(Rayd ray)
 	{
-		VolumeHitData hit = new VolumeHitData();
+		HitData hit = new HitData();
 		Vector2d hitDists = new Vector2d();
 		
 		// forced to possibly lose some precision because the JOML library does not provide a
@@ -102,6 +103,8 @@ public class Sphere extends Volume
 				Color3d C = light.hit(hit.location);
 				if (C != null) lightIntensities.add(C);
 			}
+			
+			if (lightIntensities.isEmpty()) return null;
 			
 			// multiply all light intensities
 			Color3d result = new Color3d(color.r(), color.g(), color.b());

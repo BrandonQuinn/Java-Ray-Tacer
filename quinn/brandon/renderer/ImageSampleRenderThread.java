@@ -51,9 +51,9 @@ public class ImageSampleRenderThread implements Runnable
 		for (int x = sample.x; x < sample.x + sample.width; x++) {
 			for (int y = sample.y; y < sample.y + sample.height; y++) {
 				Rayd ray = Scene.mainCamera.ray(x / (double) sample.FSAAfactor, y / (double) sample.FSAAfactor);
-				VolumeHitData closestHit = null;
+				HitData closestHit = null;
 				for (Volume volume : Scene.volumes()) {
-					VolumeHitData hit = volume.hit(ray);
+					HitData hit = volume.hit(ray);
 					if (hit != null && (closestHit == null || hit.distanceFromOrigin < closestHit.distanceFromOrigin)) {
 						closestHit = hit;
 					}

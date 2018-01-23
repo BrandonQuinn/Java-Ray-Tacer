@@ -9,7 +9,7 @@ package quinn.brandon.renderer;
 
 import org.joml.Vector3d;
 
-public class VolumeHitData
+public class HitData
 {
 	Vector3d location;
 	double distanceFromOrigin;

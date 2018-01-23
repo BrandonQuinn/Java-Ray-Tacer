@@ -67,7 +67,7 @@ public class RayTracer
 				for (int y = 0; y < Scene.mainCamera.resolutionY; y ++) {
 					Rayd ray = Scene.mainCamera.ray(x / (double) FSAA, y / (double) FSAA);
 					for (Volume volume : Scene.volumes()) {
-						VolumeHitData hit = volume.hit(ray);
+						HitData hit = volume.hit(ray);
 						if (hit != null) FSAAsuperImage.setPixel(x, y, new Color3d(hit.color.r(), hit.color.g(), hit.color.b()));
 					}
 				}
