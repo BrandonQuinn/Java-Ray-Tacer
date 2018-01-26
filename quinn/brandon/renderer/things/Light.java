@@ -1,6 +1,7 @@
-package quinn.brandon.renderer;
+package quinn.brandon.renderer.things;
 
 import org.joml.Vector3d;
+import quinn.brandon.renderer.Color3d;
 
 public abstract class Light
 {

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import org.joml.Rayd;
 import quinn.brandon.math.MathUtil;
 import quinn.brandon.renderer.stats.ThreadedRenderStats;
+import quinn.brandon.renderer.things.Volume;
 import quinn.brandon.scene.Scene;
 
 /**

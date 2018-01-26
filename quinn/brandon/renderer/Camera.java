@@ -77,7 +77,7 @@ public class Camera
 		if (orthographic) {
 			ray.oX = x;
 			ray.oY = y;
-			ray.oZ = -projectionPlaneDistance;
+			ray.oZ = 0;
 			
 			rayDirection.x = 0.0;
 			rayDirection.y = 0.0;
@@ -102,22 +102,5 @@ public class Camera
 		ray.dZ = rayDirection.z;
 		
 		return ray;
-	}
-	
-	/**
-	 * This is a temporary method to convert a world space coordinate
-	 * on to the projection plane using my clunky, naive approach.
-	 * 
-	 * @param point
-	 * @return
-	 */
-	public Vector3d projectPoint(Vector3d point)
-	{
-		Vector3d result = new Vector3d(point.x, point.y, point.z);
-		double far = Double.POSITIVE_INFINITY;
-		double near = projectionPlaneDistance;
-		
-		// TODO: laterz
-		return result;
 	}
 }

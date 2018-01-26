@@ -1,4 +1,7 @@
-package quinn.brandon.renderer;
+package quinn.brandon.renderer.things;
+
+import quinn.brandon.renderer.Color3d;
+import quinn.brandon.renderer.Rayable;
 
 public abstract class Volume implements Rayable
 {

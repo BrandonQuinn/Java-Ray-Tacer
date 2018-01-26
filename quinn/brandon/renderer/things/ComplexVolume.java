@@ -1,4 +1,4 @@
-package quinn.brandon.renderer;
+package quinn.brandon.renderer.things;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -9,6 +9,7 @@ package quinn.brandon.renderer;
 
 import java.util.ArrayList;
 import org.joml.Rayd;
+import quinn.brandon.renderer.HitData;
 
 public class ComplexVolume extends Volume
 {
@@ -18,6 +19,7 @@ public class ComplexVolume extends Volume
 	{
 		HitData data = new HitData();
 		
+		// just check if the ray hits any of the faces and return it immediately
 		for (int i = 0; i < faces.size(); i++) {
 			data = faces.get(i).hit(ray);
 			if (data != null) return data;

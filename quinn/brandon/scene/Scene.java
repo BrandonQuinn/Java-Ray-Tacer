@@ -12,11 +12,12 @@ import java.util.Random;
 import org.joml.Vector3d;
 import quinn.brandon.renderer.Camera;
 import quinn.brandon.renderer.Color3d;
-import quinn.brandon.renderer.InfinitePlane;
-import quinn.brandon.renderer.Light;
-import quinn.brandon.renderer.PointLight;
-import quinn.brandon.renderer.Sphere;
-import quinn.brandon.renderer.Volume;
+import quinn.brandon.renderer.things.Face;
+import quinn.brandon.renderer.things.InfinitePlane;
+import quinn.brandon.renderer.things.Light;
+import quinn.brandon.renderer.things.PointLight;
+import quinn.brandon.renderer.things.Sphere;
+import quinn.brandon.renderer.things.Volume;
 
 public class Scene
 {
@@ -37,14 +38,19 @@ public class Scene
 	
 	static {
 		
-		for (int i = 0; i < 6; i++) { 
-			for (int j = 0; j < 6; j++) { 
+		for (int i = 0; i < 10; i++) { 
+			for (int j = 0; j < 10; j++) { 
 				PointLight light3 = new PointLight();
-				light3.location = new Vector3d(20 + i * 250, 20 + j * 250, 580);
+				light3.location = new Vector3d(20 + i * 150, 20 + j * 150, 580);
 				light3.color = new Color3d(
 						(int)(new Random().nextDouble() * 255), 
 						(int)(new Random().nextDouble() * 255), 
 						(int)(new Random().nextDouble() * 255));
+				
+				light3.constantAttenuation = 0.005;
+				light3.linearAttenuation = 0.2;
+				light3.quadraticAttenuation = 0.5;
+				
 				addLight(light3);
 			}
 		}
@@ -63,15 +69,24 @@ public class Scene
 	
 		PointLight light1 = new PointLight();
 		light1.location = new Vector3d(25.0, 25.0, 15.0);
-		light1.quadraticAttenuation = 0.5;
+		light1.linearAttenuation = 0.4;
+		light1.quadraticAttenuation = 0.2;
 		addLight(light1);
 		
-		//Face testface = new Face();
-		//testface.verticies.add(new Vector3d(20, 20, 20));
-		//testface.verticies.add(new Vector3d(30, 30, 20));
-		//testface.verticies.add(new Vector3d(25, 25, 20));
-		//testface.normal = new Vector3d(0, 0, -1);
-		//addVolume(testface);
+		Face testface = new Face();
+		testface.verticies.add(new Vector3d(100, 100, 10));
+		testface.verticies.add(new Vector3d(200, 200, 10));
+		testface.verticies.add(new Vector3d(150, 150, 10));
+		testface.normal = new Vector3d(0, 0, -1);
+		testface.color = new Color3d(255, 255, 255);
+		addVolume(testface);
+		
+		// Face testface2 = new Face();
+		// testface2.verticies.add(new Vector3d(0, 20, 50));
+		// testface2.verticies.add(new Vector3d(0, 30, 30));
+		// testface2.verticies.add(new Vector3d(0, 25, 20));
+		// testface2.normal = new Vector3d(1, 0, 0);
+		// addVolume(testface2);
 		
 		// add a couple of spheres
 		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 350.0, 60.0));
@@ -84,13 +99,27 @@ public class Scene
 		
 		PointLight light = new PointLight();
 		light.location = new Vector3d(305.0, 260.0, 30.0);
-		light.quadraticAttenuation = 0.5;
+		light.linearAttenuation = 0.4;
+		light.quadraticAttenuation = 0.2;
 		addLight(light);
 		
 		PointLight light2 = new PointLight();
 		light2.location = new Vector3d(305.0, 220.0, 37.0);
-		light2.quadraticAttenuation = 0.5;
+		light2.linearAttenuation = 0.4;
+		light2.quadraticAttenuation = 0.2;
 		addLight(light2);
+		
+		PointLight light5 = new PointLight();
+		light5.location = new Vector3d(700, 210, 220);
+		light5.linearAttenuation = 0.4;
+		light5.quadraticAttenuation = 0.02;
+		addLight(light5);
+		
+		PointLight light6 = new PointLight();
+		light6.location = new Vector3d(700, 300, 200);
+		light6.linearAttenuation = 0.4;
+		light6.quadraticAttenuation = 0.02;
+		addLight(light6);
 	}
 	
 	/**

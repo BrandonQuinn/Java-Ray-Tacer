@@ -1,4 +1,4 @@
-package quinn.brandon.renderer;
+package quinn.brandon.renderer.things;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -9,11 +9,14 @@ package quinn.brandon.renderer;
 
 import org.joml.Intersectiond;
 import org.joml.Vector3d;
+import quinn.brandon.renderer.Color3d;
 import quinn.brandon.scene.Scene;
 
 public class PointLight extends Light
 {
-	public double quadraticAttenuation = 0.20;
+	public double constantAttenuation = 1.0;
+	public double linearAttenuation = 1.0;
+	public double quadraticAttenuation = 0.10;
 	
 	/**
 	 * Create a line from the start location given and the location of the light
@@ -29,7 +32,7 @@ public class PointLight extends Light
 				boolean intersects = Intersectiond.testLineSegmentSphere(start, location, ((Sphere)volume).location, ((Sphere) volume).radius());
 				if (!intersects) {
 					double distance = start.distance(location);
-					double intensity = (1.0 / (quadraticAttenuation * (distance * distance)));
+					double intensity = (1.0 / (constantAttenuation + linearAttenuation * distance + quadraticAttenuation * distance * distance));
 					Vector3d c = new Vector3d(color.r(), color.g(), color.g());
 					c = c.mul(intensity);
 					return new Color3d(c.x, c.y, c.z);

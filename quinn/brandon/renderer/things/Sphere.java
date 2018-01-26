@@ -1,4 +1,4 @@
-package quinn.brandon.renderer;
+package quinn.brandon.renderer.things;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -22,6 +22,8 @@ import org.joml.Spheref;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
 import quinn.brandon.math.MathUtil;
+import quinn.brandon.renderer.Color3d;
+import quinn.brandon.renderer.HitData;
 import quinn.brandon.scene.Scene;
 
 public class Sphere extends Volume

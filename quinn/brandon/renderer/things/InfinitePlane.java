@@ -1,4 +1,4 @@
-package quinn.brandon.renderer;
+package quinn.brandon.renderer.things;
 
 /***************************************************************************************
  * @author Brandon Quinn
@@ -13,6 +13,8 @@ import org.joml.Planed;
 import org.joml.Rayd;
 import org.joml.Vector3d;
 import quinn.brandon.math.MathUtil;
+import quinn.brandon.renderer.Color3d;
+import quinn.brandon.renderer.HitData;
 import quinn.brandon.scene.Scene;
 
 public class InfinitePlane extends Volume

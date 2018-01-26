@@ -9,6 +9,7 @@ package quinn.brandon.renderer;
 
 import org.joml.Rayd;
 import quinn.brandon.renderer.stats.ThreadedRenderStats;
+import quinn.brandon.renderer.things.Volume;
 import quinn.brandon.scene.Scene;
 
 public class ImageSampleRenderThread implements Runnable
@@ -45,8 +46,7 @@ public class ImageSampleRenderThread implements Runnable
 		}
 	}
 	
-	@Override
-	public void run()
+	@Override public void run()
 	{
 		for (int x = sample.x; x < sample.x + sample.width; x++) {
 			for (int y = sample.y; y < sample.y + sample.height; y++) {

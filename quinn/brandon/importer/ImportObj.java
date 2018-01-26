@@ -12,9 +12,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.joml.Vector3d;
-import quinn.brandon.renderer.ComplexVolume;
-import quinn.brandon.renderer.Face;
-import quinn.brandon.renderer.Volume;
+import quinn.brandon.renderer.things.ComplexVolume;
+import quinn.brandon.renderer.things.Face;
+import quinn.brandon.renderer.things.Volume;
 import quinn.brandon.scene.Scene;
 
 public class ImportObj

@@ -11,7 +11,7 @@ import org.joml.Vector3d;
 
 public class HitData
 {
-	Vector3d location;
-	double distanceFromOrigin;
-	Color3d color;
+	public Vector3d location;
+	public double distanceFromOrigin;
+	public Color3d color;
 }
