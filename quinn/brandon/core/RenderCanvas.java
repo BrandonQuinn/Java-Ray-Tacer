@@ -40,7 +40,7 @@ public class RenderCanvas extends Canvas implements Runnable
 		draw.start();
 	}
 	
-	private static final int CROSS_LEN = 5;
+	private static final int CROSS_LEN = 3;
 	private static final Color CROSS_COLOR = new Color(244, 167, 66);
 	
 	@Override public void run()

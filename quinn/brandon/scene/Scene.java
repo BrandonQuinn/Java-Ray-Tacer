@@ -88,11 +88,6 @@ public class Scene
 		testface2.normal = new Vector3d(0, 0, -1);
 		addVolume(testface2);
 		
-		// add a couple of spheres
-		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 350.0, 60.0));
-		sphere1.color = new Color3d(255, 100, 100);
-		addVolume(sphere1);
-		
 		Sphere sphere2 = new Sphere(80.0, new Vector3d(310.0, 220.0, 60.0));
 		sphere2.color = new Color3d(100, 100, 255);
 		addVolume(sphere2);

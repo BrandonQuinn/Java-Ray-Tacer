@@ -22,7 +22,7 @@ public class RayTracer
 	/**
 	 * Sample size.
 	 */
-	private static int SAMPLE_SIZE = 150;
+	private static int SAMPLE_SIZE = 100;
 	
 	/**
 	 * Factor to upscale the render image by for FSAA.
@@ -55,7 +55,7 @@ public class RayTracer
 	 */
 	public RayTracer(int width, int height, int FSAA, int threadCount)
 	{
-		this.FSAA = MathUtil.clamp(FSAA % 2 == 0 ? FSAA : FSAA - 1, 1, 32);
+		this.FSAA = MathUtil.clamp(FSAA % 2 == 0 ? FSAA : FSAA - 1, 1, 32); // limit to 1 - 32 and even
 		Scene.mainCamera = new Camera();
 		Scene.mainCamera.resolutionX = width * FSAA;
 		Scene.mainCamera.resolutionY = height * FSAA;
@@ -107,8 +107,6 @@ public class RayTracer
 		ThreadedRenderStats stats = scheduler.renderAll();
 		System.out.println("Multithreading (" + threadCount + " x Threads [CPU])");
 		System.out.println("Render time: "  + stats.renderTime + "ms");
-		
-		JOptionPane.showMessageDialog(null, "Render Complete.", "Done.", JOptionPane.INFORMATION_MESSAGE);
 		
 		return image.image();
 	}

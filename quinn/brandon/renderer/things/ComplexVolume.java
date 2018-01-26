@@ -18,13 +18,16 @@ public class ComplexVolume extends Volume
 	@Override public HitData hit(Rayd ray)
 	{
 		HitData data = new HitData();
-		
+		HitData nearest = null;
 		// just check if the ray hits any of the faces and return it immediately
 		for (int i = 0; i < faces.size(); i++) {
 			data = faces.get(i).hit(ray);
-			if (data != null) return data;
+			if (data != null) {
+				if (nearest == null) nearest = data;
+				if (nearest.distanceFromOrigin > data.distanceFromOrigin) nearest = data;
+			}
 		}
 		
-		return null;
+		return nearest;
 	}
 }

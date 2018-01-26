@@ -38,21 +38,20 @@ public class Face extends Volume
 		// math. Oh well...
 		
 		Vector3d vertex1 = verticies.get(0);
-		for (int i = 0; i < verticies.size() - 2; i++) {
+		for (int i = 0; i < verticies.size() - 1; i++) {
 			double distance = Intersectiond.intersectRayTriangle(
 					new Vector3d(ray.oX, ray.oY, ray.oZ),
 					new Vector3d(ray.dX, ray.dY, ray.dZ), 
 					vertex1,
+					verticies.get(i),
 					verticies.get(i + 1),
-					verticies.get(i + 2),
-					.001);
+					0.00001);
 			
 			if (distance != -1.0) {
 				hit.location = new Vector3d(MathUtil.pointAlongRay(ray, distance));
 				hit.distanceFromOrigin = distance;
 				Color3d lightIntensity = Lighting.intensityAt(hit.location);
 				hit.color = lightIntensity.mul(color);
-				hit.color = lightIntensity;
 				return hit;
 			}
 		}

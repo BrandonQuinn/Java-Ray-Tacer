@@ -7,14 +7,14 @@ import quinn.brandon.renderer.RayTracer;
 
 public class Main
 {
-	public static int WIDTH = 1600;
-	public static int HEIGHT = 900;
-	public static int FSAA_FACTOR = 1;
+	public static int WIDTH = 1280;
+	public static int HEIGHT = 720;
+	public static int FSAA_FACTOR = 2;
 	public static int THREAD_COUNT = 8;
 	
 	public static void main(String args[]) throws FileNotFoundException 
 	{
-		ImportObj.load(new File(Main.class.getResource("/quinn/brandon/testres/test.obj").getFile().replace("%20", " ")));
+		ImportObj.load(new File(Main.class.getResource("/quinn/brandon/testres/testquads.obj").getFile().replace("%20", " ")));
 		
 		RayTracer rayTracer = new RayTracer(
 				WIDTH, HEIGHT, 
