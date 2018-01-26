@@ -1,17 +1,17 @@
 ## Features
 
 - Supported volumes: spheres, infinite plane, tris, polygon (ONLY CONVEX POLYGONS)
-	- It only has a simply polygon triangulation algorithm that can not handle concave polys
+	- It only has a simple polygon triangulation algorithm that can not handle concave polys
 - Multiple point lights
-- Point lights (inverse square intensity w/ quadratic attenutation)
+- Point lights (inverse square intensity (1.0/(k1 + k2 * d + k3 * d * d)))
 - Orthographic camera
 - Multi-threaded rendering (CPU)
-- FSAA (Fullscreen anti-aliasing)
+- FSAA (fullscreen anti-aliasing)
 - Quad and tri hit detection
 
 ## TODO
 
-### Viewing/Camera
+#### Viewing/Camera
 
 - Perspective-correct interpolation
 - Camera/frustum rotation
@@ -37,7 +37,7 @@
 ## Noteworthy Issues
 
 - View frustum doesn't work at all, it's just a straight line projection
-- Model loading at least from Blender leave models grossly undersized and mis-located
+- Model loading at least from Blender leave models grossly undersized and mislocated
 
 ## Dependencies 
 
