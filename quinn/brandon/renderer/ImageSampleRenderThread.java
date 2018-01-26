@@ -15,7 +15,7 @@ import quinn.brandon.scene.Scene;
 public class ImageSampleRenderThread implements Runnable
 {
 	private ImageSample sample;
-	private RenderBuffer dest;
+	private volatile RenderBuffer dest;
 	public volatile boolean done = true;
 	public volatile int threadID;
 	public ThreadedRenderStats stats;
@@ -48,22 +48,44 @@ public class ImageSampleRenderThread implements Runnable
 	
 	@Override public void run()
 	{
-		for (int x = sample.x; x < sample.x + sample.width; x++) {
-			for (int y = sample.y; y < sample.y + sample.height; y++) {
-				Rayd ray = Scene.mainCamera.ray(x / (double) sample.FSAAfactor, y / (double) sample.FSAAfactor);
-				HitData closestHit = null;
-				for (Volume volume : Scene.volumes()) {
-					HitData hit = volume.hit(ray);
-					if (hit != null && (closestHit == null || hit.distanceFromOrigin < closestHit.distanceFromOrigin)) {
-						closestHit = hit;
+		// create an image 'FSAAfactor' times as large as the original
+		RenderBuffer supersampledImage = new RenderBuffer(sample.FSAAfactor, sample.FSAAfactor);
+		for (int y = sample.y; y < sample.y + sample.height; y++) {
+			for (int x = sample.x; x < sample.x + sample.width; x++) {
+				dest.setPixel(x, y, new Color3d(255, 255, 255)); // just a fun little thing
+				// for the outer loop per-pixel we are going to do more pixels for each pixel creating the
+				// multi-sampling effect then output the result from the inner loop and get the average.
+				for (int sx = 0; sx < sample.FSAAfactor; sx++) {
+					for (int sy = 0; sy < sample.FSAAfactor; sy++) {
+						Rayd ray = Scene.mainCamera.ray(x + (sx / (double) sample.FSAAfactor), y + (sy / (double) sample.FSAAfactor));
+						HitData closestHit = null;
+						
+						for (Volume volume : Scene.volumes()) {
+							HitData hit = volume.hit(ray);
+							if (hit != null && (closestHit == null || hit.distanceFromOrigin < closestHit.distanceFromOrigin)) {
+								closestHit = hit;
+								supersampledImage.setPixel(sx, sy, hit.color);
+							}
+						}
 					}
 				}
-				if (closestHit != null) dest.setPixel(x, y, new Color3d(closestHit.color.r(), closestHit.color.g(), closestHit.color.b()));
+				
+				dest.setPixel(x, y, supersampledImage.downSample(sample.FSAAfactor).getPixel(0, 0));
 			}
 		}
 		
 		time = System.currentTimeMillis() - time;
 		stats.totalTimeInThread[threadID] += time;
 		done = true;
+	}
+
+	/**
+	 * Returns the sample for this thread.
+	 * 
+	 * @return
+	 */
+	public synchronized ImageSample getSample()
+	{
+		return sample;
 	}
 }

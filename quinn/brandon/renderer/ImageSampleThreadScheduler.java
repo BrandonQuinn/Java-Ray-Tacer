@@ -1,5 +1,9 @@
 package quinn.brandon.renderer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
 /***************************************************************************************
  * @author Brandon Quinn
  * @since 22 Jan 2018
@@ -55,6 +59,14 @@ public class ImageSampleThreadScheduler
 	{
 		stats.renderTime = System.currentTimeMillis();
 		
+		// randomise order
+		ArrayList<ImageSample> randomisedSamples = new ArrayList<ImageSample>();
+		for (int i = 0; i < scheduleQueue.size(); i++)
+			randomisedSamples.add(scheduleQueue.poll());
+		Collections.shuffle(randomisedSamples, new Random(System.nanoTime()));
+		for (int i = 0; i < randomisedSamples.size(); i++)
+			scheduleQueue.offer(randomisedSamples.get(i));
+		
 		while(!scheduleQueue.isEmpty()) {
 			// wait for a free thread the nstart it with the next item in the queue
 			ImageSampleRenderThread thread = waitForFreeThread();
@@ -97,5 +109,23 @@ public class ImageSampleThreadScheduler
 				}
 			}
 		}
+	}
+
+	/**
+	 * Returns a list of all samples that are currently not done.
+	 * 
+	 * @return
+	 */
+	public synchronized ImageSample[] currentlyRenderingSamples()
+	{
+		ArrayList<ImageSample> samples = new ArrayList<ImageSample>();
+		
+		for (int i = 0; i < threadPool.length; i++) {
+			if (!threadPool[i].done) {
+				samples.add(threadPool[i].getSample());
+			}
+		}
+		
+		return samples.toArray(new ImageSample[samples.size()]);
 	}
 }

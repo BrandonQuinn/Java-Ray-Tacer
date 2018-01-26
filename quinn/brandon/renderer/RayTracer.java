@@ -9,10 +9,8 @@ package quinn.brandon.renderer;
 
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
-import org.joml.Rayd;
 import quinn.brandon.math.MathUtil;
 import quinn.brandon.renderer.stats.ThreadedRenderStats;
-import quinn.brandon.renderer.things.Volume;
 import quinn.brandon.scene.Scene;
 
 /**
@@ -22,6 +20,11 @@ import quinn.brandon.scene.Scene;
 public class RayTracer
 {
 	/**
+	 * Sample size.
+	 */
+	private static int SAMPLE_SIZE = 150;
+	
+	/**
 	 * Factor to upscale the render image by for FSAA.
 	 */
 	private int FSAA = 1;
@@ -30,6 +33,16 @@ public class RayTracer
 	 * Number of thread to render the image with.
 	 */
 	private int threadCount = 1;
+	
+	/**
+	 * The image.
+	 */
+	private RenderBuffer image;
+	
+	/**
+	 * Thread schduler.
+	 */
+	private ImageSampleThreadScheduler scheduler;
 	
 	/**
 	 * Create an instance of the ray tracer with all the parameters needed for it to know
@@ -49,6 +62,7 @@ public class RayTracer
 		Scene.mainCamera.projectionPlaneWidth = width;
 		Scene.mainCamera.projectionPlaneHeight = height;
 		this.threadCount = threadCount;
+		image = new RenderBuffer((int) Scene.mainCamera.projectionPlaneWidth, (int) Scene.mainCamera.projectionPlaneHeight);
 	}
 	
 	/**
@@ -57,61 +71,65 @@ public class RayTracer
 	 * @return Final rendered image
 	 */
 	public BufferedImage render()
+	{	
+		int sampleWidth = SAMPLE_SIZE;
+		int sampleHeight = SAMPLE_SIZE;
+		
+		// schedule samples to be rendered
+		scheduler = new ImageSampleThreadScheduler(threadCount, image);
+		for (int x = 0; x < image.image().getWidth(); x += SAMPLE_SIZE) {
+			for (int y = 0; y < image.image().getHeight(); y += SAMPLE_SIZE) {
+				try {
+					sampleWidth = SAMPLE_SIZE; sampleHeight = SAMPLE_SIZE;
+					
+					// prevent the sample from going over the edge
+					if (x + SAMPLE_SIZE > image.image().getWidth()) {
+						sampleWidth = image.image().getWidth() - x;
+					} 
+					if (y + SAMPLE_SIZE > image.image().getHeight()) {
+						sampleHeight = image.image().getHeight() - y;
+					}
+					
+					// schedule the sample to render
+					ImageSample newSample = new ImageSample(x, y, sampleWidth, sampleHeight, FSAA);
+					scheduler.scheduleSample(newSample);
+				} catch (IllegalStateException e) {
+					JOptionPane.showMessageDialog(null, "Too many samples are being computed.\nIncrease THREAD_IMAGE_SAMPLE_SIZE", 
+							"Too many samples.", JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		ThreadedRenderStats stats = scheduler.renderAll();
+		System.out.println("Multithreading (" + threadCount + " x Threads [CPU])");
+		System.out.println("Render time: "  + stats.renderTime + "ms");
+		
+		JOptionPane.showMessageDialog(null, "Render Complete.", "Done.", JOptionPane.INFORMATION_MESSAGE);
+		
+		return image.image();
+	}
+	
+	/**
+	 * Returns the buffered image assocated with the render buffer.
+	 * 
+	 * @return
+	 */
+	public BufferedImage image()
 	{
-		RenderBuffer FSAAsuperImage = new RenderBuffer(Scene.mainCamera.resolutionX, Scene.mainCamera.resolutionY);
-		
-		// SINGLE THREADED RENDERING
-		if (threadCount <= 1) {
-			double time = System.currentTimeMillis();
-			
-			for (int x = 0; x < Scene.mainCamera.resolutionX; x++) {
-				for (int y = 0; y < Scene.mainCamera.resolutionY; y ++) {
-					Rayd ray = Scene.mainCamera.ray(x / (double) FSAA, y / (double) FSAA);
-					for (Volume volume : Scene.volumes()) {
-						HitData hit = volume.hit(ray);
-						if (hit != null) FSAAsuperImage.setPixel(x, y, new Color3d(hit.color.r(), hit.color.g(), hit.color.b()));
-					}
-				}
-			}
-			
-			System.out.println("Single Threaded on CPU");
-			System.out.println("Render time: " + (System.currentTimeMillis() - time));
-			
-		// MULTI-THREADED RENDERING
-		} else { 
-			
-			// schedule samples to be rendered
-			ImageSampleThreadScheduler scheduler = new ImageSampleThreadScheduler(threadCount, FSAAsuperImage);
-			int threadImageSampleSizeW = Scene.mainCamera.resolutionX / threadCount;
-			int threadImageSampleSizeH = Scene.mainCamera.resolutionY / threadCount;
-			for (int x = 0; x < Scene.mainCamera.resolutionX; x += threadImageSampleSizeW) {
-				for (int y = 0; y < Scene.mainCamera.resolutionY; y += threadImageSampleSizeH) {
-					try {
-						// schedule the sample to render
-						ImageSample newSample = new ImageSample(x, y, threadImageSampleSizeW, threadImageSampleSizeH, FSAA);
-						scheduler.scheduleSample(newSample);
-					} catch (IllegalStateException e) {
-						JOptionPane.showMessageDialog(null, "Too many samples are being computed.\nIncrease THREAD_IMAGE_SAMPLE_SIZE", 
-								"Too many samples.", JOptionPane.ERROR_MESSAGE);
-						System.exit(0);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-			
-			ThreadedRenderStats stats = scheduler.renderAll();
-			System.out.println("Multithreading (" + threadCount + " x Threads [CPU])");
-			System.out.println("Render time: "  + stats.renderTime + "ms");
-		}
-		
-		// only down sample if the factor is not 1
-		if (FSAA > 1) {
-			RenderBuffer downSampledImage = FSAAsuperImage.downSample(FSAA);
-			return downSampledImage.image();
-		}
-		
-		return FSAAsuperImage.image();
+		return image.image();
+	}
+
+	/**
+	 * Returns all the image samples currently being rendered.
+	 * 
+	 * @return
+	 */
+	public synchronized ImageSample[] getCurrentlyRenderingSamples()
+	{
+		return scheduler.currentlyRenderingSamples();
 	}
 }

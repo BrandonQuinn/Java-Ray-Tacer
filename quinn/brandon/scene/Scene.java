@@ -38,10 +38,10 @@ public class Scene
 	
 	static {
 		
-		for (int i = 0; i < 10; i++) { 
-			for (int j = 0; j < 10; j++) { 
+		for (int i = 0; i < 5; i++) { 
+			for (int j = 0; j < 5; j++) { 
 				PointLight light3 = new PointLight();
-				light3.location = new Vector3d(20 + i * 150, 20 + j * 150, 580);
+				light3.location = new Vector3d(20 + i * 300, 20 + j * 150, 580);
 				light3.color = new Color3d(
 						(int)(new Random().nextDouble() * 255), 
 						(int)(new Random().nextDouble() * 255), 

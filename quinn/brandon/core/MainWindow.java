@@ -22,7 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import quinn.brandon.renderer.RayTracer;
 
 public class MainWindow extends Frame implements WindowListener, ActionListener
 {
@@ -35,11 +37,15 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 	private Menu filemenu = new Menu("File");
 	private MenuItem saveImageItem = new MenuItem("Save Image");
 	
-	public MainWindow(BufferedImage image)
+	public MainWindow(RayTracer rayTracer)
 	{
 		super("Ray Tracer");
-		this.image = image;
-		canvas = new RenderCanvas(image);
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch (Exception e) {}
+		
+		canvas = new RenderCanvas(rayTracer);
 		addWindowListener(this);
 		setLayout(new BorderLayout());
 		add(canvas, BorderLayout.CENTER);
@@ -49,6 +55,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 		setMenuBar(menubar);
 		pack();
 		setLocationRelativeTo(null);
+		canvas.start();
 	}
 	
 	@Override
