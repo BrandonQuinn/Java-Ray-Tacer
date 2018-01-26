@@ -8,6 +8,7 @@ package quinn.brandon.renderer;
  ***************************************************************************************/
 
 import org.joml.Vector3d;
+import quinn.brandon.math.MathUtil;
 
 public class Color3d extends Vector3d
 {
@@ -72,5 +73,19 @@ public class Color3d extends Vector3d
 		String string = "";
 		string = "(" + x + ", " + y + ", " + z + ")";
 		return string;
+	}
+	
+	/**
+	 * Multiplt the components and clamp limiting to 0 - 255.
+	 * 
+	 * @param vec
+	 * @return
+	 */
+	public Color3d mul(Color3d c)
+	{
+		x = MathUtil.clamp(c.x * x, 0, 255);
+		y = MathUtil.clamp(c.y * y, 0, 255);
+		z = MathUtil.clamp(c.z * z, 0, 255);
+		return this;
 	}
 }

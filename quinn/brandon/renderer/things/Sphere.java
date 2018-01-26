@@ -2,15 +2,6 @@ package quinn.brandon.renderer.things;
 
 /***************************************************************************************
  * @author Brandon Quinn
- * @since 22 Jan 2018
- * 
- * Licenced under the MIT License.
- ***************************************************************************************/
-
-import java.util.ArrayList;
-
-/***************************************************************************************
- * @author Brandon Quinn
  * @since 21 Jan 2018
  * 
  * Licenced under the MIT License.
@@ -21,10 +12,8 @@ import org.joml.Rayd;
 import org.joml.Spheref;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
-import quinn.brandon.math.MathUtil;
 import quinn.brandon.renderer.Color3d;
 import quinn.brandon.renderer.HitData;
-import quinn.brandon.scene.Scene;
 
 public class Sphere extends Volume
 {
@@ -99,30 +88,8 @@ public class Sphere extends Volume
 			hit.location = hitPoint;
 			hit.distanceFromOrigin = hit.location.distance(new Vector3d(ray.oX, ray.oY, ray.oZ));
 			
-			// go through each light and get the intensity
-			ArrayList<Color3d> lightIntensities = new ArrayList<Color3d>();
-			for (Light light: Scene.lights()) {
-				Color3d C = light.hit(hit.location);
-				if (C != null) lightIntensities.add(C);
-			}
-			
-			if (lightIntensities.isEmpty()) return null;
-			
-			// multiply all light intensities
-			Color3d result = new Color3d(color.r(), color.g(), color.b());
-			Color3d addedIntensities = new Color3d(0, 0, 0);
-			for (int l = 0; l < lightIntensities.size(); l++) {
-				addedIntensities.x += lightIntensities.get(l).x;
-				addedIntensities.y += lightIntensities.get(l).y;
-				addedIntensities.z += lightIntensities.get(l).z;
-			}
-			
-			result.mul(new Vector3d(addedIntensities.x, addedIntensities.y, addedIntensities.z));
-			result.x = MathUtil.clamp(result.x, 0, 255);
-			result.y = MathUtil.clamp(result.y, 0, 255);
-			result.z = MathUtil.clamp(result.z, 0, 255);
-
-			hit.color = result;
+			Color3d lightIntensity = Lighting.intensityAt(hit.location);
+			hit.color = lightIntensity.mul(color);
 			return hit;
 		}
 		

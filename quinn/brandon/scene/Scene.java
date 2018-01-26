@@ -81,12 +81,12 @@ public class Scene
 		testface.color = new Color3d(255, 255, 255);
 		addVolume(testface);
 		
-		// Face testface2 = new Face();
-		// testface2.verticies.add(new Vector3d(0, 20, 50));
-		// testface2.verticies.add(new Vector3d(0, 30, 30));
-		// testface2.verticies.add(new Vector3d(0, 25, 20));
-		// testface2.normal = new Vector3d(1, 0, 0);
-		// addVolume(testface2);
+		Face testface2 = new Face();
+		testface2.verticies.add(new Vector3d(100, 100, 100));
+		testface2.verticies.add(new Vector3d(100, 60, 100));
+		testface2.verticies.add(new Vector3d(50, 100, 100));
+		testface2.normal = new Vector3d(0, 0, -1);
+		addVolume(testface2);
 		
 		// add a couple of spheres
 		Sphere sphere1 = new Sphere(20.0, new Vector3d(310.0, 350.0, 60.0));
