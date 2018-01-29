@@ -28,8 +28,8 @@ public class InfinitePlane extends Volume
 		if (intersection != -1.0) {
 			hit.location = new Vector3d(ray.dX, ray.dY, ray.dZ).mul(intersection).add(new Vector3d(ray.oX, ray.oY, ray.oZ));
 			hit.distanceFromOrigin = hit.location.distance(new Vector3d(ray.oX, ray.oY, ray.oZ));
-			Color3d lightIntensity = Lighting.intensityAt(hit.location);
-			hit.color = lightIntensity.mul(color);
+			Color3d lightIntensity = SceneLighting.intensityAt(hit.location);
+			hit.color = lightIntensity.mul(surface.color);
 			hit.color = lightIntensity;
 			return hit;
 		}

@@ -51,7 +51,7 @@ public class Face extends Volume
 			if (distance != -1.0) {
 				hit.location = new Vector3d(MathUtil.pointAlongRay(ray, distance));
 				hit.distanceFromOrigin = distance;
-				Color3d lightIntensity = Lighting.intensityAt(hit.location);
+				Color3d lightIntensity = SceneLighting.intensityAt(hit.location);
 				hit.color = lightIntensity.mul(color);
 				return hit;
 			}

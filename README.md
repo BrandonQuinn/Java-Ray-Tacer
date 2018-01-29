@@ -36,8 +36,7 @@
 
 #### Optimisation and Profiling
 
-- Memory pre-allocation
-- Memory profiler
+- Memory and function-level execution time profiling
 
 ## Noteworthy Issues
 

@@ -17,7 +17,7 @@ import quinn.brandon.renderer.RayHitOutput;
 
 public class Sphere extends Volume
 {
-	private double radius = 5.0;
+	public double radius = 5.0;
 	public Vector3d location = new Vector3d();
 	
 	public Sphere()
@@ -35,26 +35,6 @@ public class Sphere extends Volume
 	{
 		location.x = x; location.y = y; location.z = z;
 		this.radius = radius;
-	}
-	
-	/**
-	 * Set the radius of the sphere.
-	 * 
-	 * @param radius
-	 */
-	public void setRadius(double radius)
-	{
-		this.radius = radius;
-	}
-	
-	/**
-	 * Return the radius of the sphere.
-	 * 
-	 * @return
-	 */
-	public double radius()
-	{
-		return radius;
 	}
 	
 	/**
@@ -88,8 +68,8 @@ public class Sphere extends Volume
 			hit.location = hitPoint;
 			hit.distanceFromOrigin = hit.location.distance(new Vector3d(ray.oX, ray.oY, ray.oZ));
 			
-			Color3d lightIntensity = Lighting.intensityAt(hit.location);
-			hit.color = lightIntensity.mul(color);
+			Color3d lightIntensity = SceneLighting.intensityAt(hit.location);
+			hit.color = lightIntensity.mul(surface.color);
 			return hit;
 		}
 		

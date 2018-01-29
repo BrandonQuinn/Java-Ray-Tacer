@@ -9,7 +9,8 @@ package quinn.brandon.core;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -49,14 +50,14 @@ public class RenderCanvas extends Canvas implements Runnable
 		bstrat = getBufferStrategy();
 		
 		while (rendering) {
-			Graphics g = bstrat.getDrawGraphics();
+			Graphics2D g = (Graphics2D) bstrat.getDrawGraphics();
 			g.drawImage(image, 0, 0, null);
 			
 			// draw some nice rectangles around the samples
 			try {
 				ImageSample[] samplesBeginRendered = rayTracer.getCurrentlyRenderingSamples();
 				
-				if (samplesBeginRendered != null) {
+				if (samplesBeginRendered.length > 0) {
 					for (ImageSample sample : samplesBeginRendered) {
 						g.setColor(CROSS_COLOR);
 						
@@ -76,6 +77,12 @@ public class RenderCanvas extends Canvas implements Runnable
 						g.drawLine(sample.x, sample.y + sample.height - CROSS_LEN - 1, sample.x, sample.y + sample.height - 1);
 						g.drawLine(sample.x, sample.y + sample.height - 1, sample.x + CROSS_LEN, sample.y + sample.height - 1);
 					}
+				} else {
+					g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					g.setColor(Color.BLACK);
+					g.drawString("Render Complete", 11, 21);
+					g.setColor(Color.WHITE);
+					g.drawString("Render Complete", 10, 20);
 				}
 			} catch (Exception e ) {
 				// do nothing, a null pointer sometimes occurs but only before rendering starts

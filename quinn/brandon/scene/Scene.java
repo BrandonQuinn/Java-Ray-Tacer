@@ -59,13 +59,13 @@ public class Scene
 		InfinitePlane plane = new InfinitePlane();
 		plane.location = new Vector3d(320.0, 320.0, 600.0);
 		plane.direction = new Vector3d(0.0, 0.0, -1.0).normalize();
-		plane.color = new Color3d(220, 220, 255);
+		plane.surface.color = new Color3d(220, 220, 255);
 		addVolume(plane);
 		
 		InfinitePlane planeleft = new InfinitePlane();
 		planeleft.location = new Vector3d(0.0, 320.0, 500.0);
 		planeleft.direction = new Vector3d(1.0, 0.0, -0.9).normalize();
-		planeleft.color = new Color3d(220, 220, 0);
+		planeleft.surface.color = new Color3d(220, 220, 0);
 		addVolume(planeleft);
 	
 		PointLight light1 = new PointLight();
@@ -90,7 +90,7 @@ public class Scene
 		addVolume(testface2);
 		
 		Sphere sphere2 = new Sphere(80.0, new Vector3d(310.0, 220.0, 60.0));
-		sphere2.color = new Color3d(100, 100, 255);
+		sphere2.surface.color = new Color3d(100, 100, 255);
 		addVolume(sphere2);
 		
 		PointLight light = new PointLight();

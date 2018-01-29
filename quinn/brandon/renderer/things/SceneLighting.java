@@ -9,12 +9,17 @@ package quinn.brandon.renderer.things;
 
 import java.util.ArrayList;
 import org.joml.Vector3d;
-import quinn.brandon.core.math.MathUtil;
 import quinn.brandon.renderer.Color3d;
 import quinn.brandon.scene.Scene;
 
-public class Lighting
+public class SceneLighting
 {
+	/**
+	 * Ambient lighting applied to all lighting calculations.
+	 * Gives the scene a minimum amount of light, even for shadows.
+	 */
+	public static Color3d ambient = new Color3d(10, 10, 10);
+	
 	/**
 	 * Goes through every light in the scene and calculates the intensity of all
 	 * of them together at the specified location.
@@ -39,10 +44,6 @@ public class Lighting
 			addedIntensities.y += lightIntensities.get(l).y;
 			addedIntensities.z += lightIntensities.get(l).z;
 		}
-		
-		addedIntensities.x = MathUtil.clamp(addedIntensities.x, 0, 255);
-		addedIntensities.y = MathUtil.clamp(addedIntensities.y, 0, 255);
-		addedIntensities.z = MathUtil.clamp(addedIntensities.z, 0, 255);
 		
 		return addedIntensities;
 	}

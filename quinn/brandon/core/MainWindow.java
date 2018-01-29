@@ -47,6 +47,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 		
 		canvas = new RenderCanvas(rayTracer);
 		addWindowListener(this);
+		this.image = rayTracer.image();
 		setLayout(new BorderLayout());
 		add(canvas, BorderLayout.CENTER);
 		saveImageItem.addActionListener(this);

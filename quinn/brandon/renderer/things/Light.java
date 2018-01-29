@@ -12,7 +12,7 @@ import quinn.brandon.renderer.Color3d;
 
 public abstract class Light
 {
-	public double intensity = 10.0f;
+	public double intensity = 0.1f;
 	public Color3d color = new Color3d(255, 255, 255);
 	public Vector3d location = new Vector3d();
 	

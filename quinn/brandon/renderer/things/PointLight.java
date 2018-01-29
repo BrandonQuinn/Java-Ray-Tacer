@@ -29,7 +29,7 @@ public class PointLight extends Light
 	{
 		for (Volume volume : Scene.volumes()) {
 			if (volume instanceof Sphere) {
-				boolean intersects = Intersectiond.testLineSegmentSphere(start, location, ((Sphere)volume).location, ((Sphere) volume).radius());
+				boolean intersects = Intersectiond.testLineSegmentSphere(start, location, ((Sphere)volume).location, ((Sphere) volume).radius);
 				if (!intersects) {
 					double distance = start.distance(location);
 					double intensity = (1.0 / (constantAttenuation + linearAttenuation * distance + quadraticAttenuation * distance * distance));
@@ -39,7 +39,6 @@ public class PointLight extends Light
 				}
 			}
 		}
-		
 		return null;
 	}
 }
