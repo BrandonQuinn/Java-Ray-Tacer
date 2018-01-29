@@ -1,17 +1,16 @@
-package quinn.brandon.renderer;
-
 /***************************************************************************************
  * @author Brandon Quinn
- * @since 22 Jan 2018
+ * @since 23 Jan 2018
  * 
  * Licenced under the MIT License.
  ***************************************************************************************/
 
-import org.joml.Vector3d;
+package quinn.brandon.renderer.things;
 
-public class HitData
+import quinn.brandon.renderer.Color3d;
+
+public class LightHitOutput
 {
-	public Vector3d location;
-	public double distanceFromOrigin;
 	public Color3d color;
+	public double intensity;
 }

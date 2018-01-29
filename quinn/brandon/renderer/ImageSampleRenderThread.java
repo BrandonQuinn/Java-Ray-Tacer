@@ -40,9 +40,9 @@ public class ImageSampleRenderThread implements Runnable
 			done = false;
 			time = System.currentTimeMillis();
 			this.sample = sample;
-			Thread thread = new Thread(this);
-			thread.setName("Render Thread " + threadID);
-			thread.start();
+			Thread t = new Thread(this);
+			t.setName("RENDER:" + threadID);
+			t.start();
 		}
 	}
 	
@@ -55,10 +55,10 @@ public class ImageSampleRenderThread implements Runnable
 				for (int sx = 0; sx < sample.FSAAfactor; sx++) {
 					for (int sy = 0; sy < sample.FSAAfactor; sy++) {
 						Rayd ray = Scene.mainCamera.ray(x + (sx / (double) sample.FSAAfactor), y + (sy / (double) sample.FSAAfactor));
-						HitData closestHit = null;
+						RayHitOutput closestHit = null;
 						
 						for (Volume volume : Scene.volumes()) {
-							HitData hit = volume.hit(ray);
+							RayHitOutput hit = volume.hit(ray);
 							if (hit != null && (closestHit == null || hit.distanceFromOrigin < closestHit.distanceFromOrigin)) {
 								closestHit = hit;
 								supersampledImage.setPixel(sx, sy, hit.color);

@@ -12,16 +12,16 @@ import org.joml.Planed;
 import org.joml.Rayd;
 import org.joml.Vector3d;
 import quinn.brandon.renderer.Color3d;
-import quinn.brandon.renderer.HitData;
+import quinn.brandon.renderer.RayHitOutput;
 
 public class InfinitePlane extends Volume
 {
 	public Vector3d direction = new Vector3d(0.0, 1.0, 0.0);
 	public Vector3d location = new Vector3d(0, 0, 0);
 	
-	@Override public HitData hit(Rayd ray)
+	@Override public RayHitOutput hit(Rayd ray)
 	{
-		HitData hit = new HitData();
+		RayHitOutput hit = new RayHitOutput();
 		Planed plane = new Planed(location, direction);
 		double intersection = Intersectiond.intersectRayPlane(ray, plane, 0.000001);
 		

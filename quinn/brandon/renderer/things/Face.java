@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import org.joml.Intersectiond;
 import org.joml.Rayd;
 import org.joml.Vector3d;
-import quinn.brandon.math.MathUtil;
+import quinn.brandon.core.math.MathUtil;
 import quinn.brandon.renderer.Color3d;
-import quinn.brandon.renderer.HitData;
+import quinn.brandon.renderer.RayHitOutput;
 
 public class Face extends Volume
 {
@@ -21,9 +21,9 @@ public class Face extends Volume
 	public Vector3d normal;
 	public ArrayList<Vector3d> verticies = new ArrayList<Vector3d>();
 
-	@Override public HitData hit(Rayd ray)
+	@Override public RayHitOutput hit(Rayd ray)
 	{
-		HitData hit = new HitData();
+		RayHitOutput hit = new RayHitOutput();
 		
 		// fun story...
 		// I tried doing the method where you change everything to 2D after creating a plane
@@ -39,14 +39,15 @@ public class Face extends Volume
 		
 		Vector3d vertex1 = verticies.get(0);
 		for (int i = 0; i < verticies.size() - 1; i++) {
+
 			double distance = Intersectiond.intersectRayTriangle(
 					new Vector3d(ray.oX, ray.oY, ray.oZ),
-					new Vector3d(ray.dX, ray.dY, ray.dZ), 
+					new Vector3d(ray.dX, ray.dY, ray.dZ),
 					vertex1,
 					verticies.get(i),
 					verticies.get(i + 1),
 					0.00001);
-			
+
 			if (distance != -1.0) {
 				hit.location = new Vector3d(MathUtil.pointAlongRay(ray, distance));
 				hit.distanceFromOrigin = distance;

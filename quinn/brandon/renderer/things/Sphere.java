@@ -13,7 +13,7 @@ import org.joml.Spheref;
 import org.joml.Vector2d;
 import org.joml.Vector3d;
 import quinn.brandon.renderer.Color3d;
-import quinn.brandon.renderer.HitData;
+import quinn.brandon.renderer.RayHitOutput;
 
 public class Sphere extends Volume
 {
@@ -65,9 +65,9 @@ public class Sphere extends Volume
 	 * @param ray The ray shooting out from which ever pixel on the screen view.
 	 * @return The colour corresponding the where the ray hit on the sphere.
 	 */
-	@Override public HitData hit(Rayd ray)
+	@Override public RayHitOutput hit(Rayd ray)
 	{
-		HitData hit = new HitData();
+		RayHitOutput hit = new RayHitOutput();
 		Vector2d hitDists = new Vector2d();
 		
 		// forced to possibly lose some precision because the JOML library does not provide a

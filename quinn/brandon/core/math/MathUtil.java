@@ -1,4 +1,4 @@
-package quinn.brandon.math;
+package quinn.brandon.core.math;
 
 import org.joml.LineSegmentd;
 import org.joml.Rayd;

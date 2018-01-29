@@ -9,7 +9,7 @@ package quinn.brandon.renderer.things;
 
 import java.util.ArrayList;
 import org.joml.Vector3d;
-import quinn.brandon.math.MathUtil;
+import quinn.brandon.core.math.MathUtil;
 import quinn.brandon.renderer.Color3d;
 import quinn.brandon.scene.Scene;
 

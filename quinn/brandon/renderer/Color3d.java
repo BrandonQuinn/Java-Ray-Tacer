@@ -8,7 +8,7 @@ package quinn.brandon.renderer;
  ***************************************************************************************/
 
 import org.joml.Vector3d;
-import quinn.brandon.math.MathUtil;
+import quinn.brandon.core.math.MathUtil;
 
 public class Color3d extends Vector3d
 {

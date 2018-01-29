@@ -9,7 +9,7 @@ package quinn.brandon.renderer;
 
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
-import quinn.brandon.math.MathUtil;
+import quinn.brandon.core.math.MathUtil;
 import quinn.brandon.renderer.stats.ThreadedRenderStats;
 import quinn.brandon.scene.Scene;
 
@@ -98,7 +98,6 @@ public class RayTracer
 							"Too many samples.", JOptionPane.ERROR_MESSAGE);
 					System.exit(0);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

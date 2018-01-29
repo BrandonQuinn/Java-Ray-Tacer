@@ -1,3 +1,10 @@
+/***************************************************************************************
+ * @author Brandon Quinn
+ * @since 23 Jan 2018
+ * 
+ * Licenced under the MIT License.
+ ***************************************************************************************/
+
 package quinn.brandon.renderer;
 
 import java.util.ArrayList;

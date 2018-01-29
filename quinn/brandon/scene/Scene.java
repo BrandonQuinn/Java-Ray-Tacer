@@ -36,8 +36,9 @@ public class Scene
 	 */
 	private static volatile ArrayList<Light> lights = new ArrayList<Light>(1);
 	
-	static {
-		
+	// adds a bunch of objects to the scene for demoing
+	public static void createDemoScene() 
+	{
 		for (int i = 0; i < 5; i++) { 
 			for (int j = 0; j < 5; j++) { 
 				PointLight light3 = new PointLight();

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import quinn.brandon.importer.ImportObj;
 import quinn.brandon.renderer.RayTracer;
+import quinn.brandon.scene.Scene;
 
 public class Main
 {
@@ -15,6 +16,7 @@ public class Main
 	public static void main(String args[]) throws FileNotFoundException 
 	{
 		ImportObj.load(new File(Main.class.getResource("/quinn/brandon/testres/testquads.obj").getFile().replace("%20", " ")));
+		Scene.createDemoScene();
 		
 		RayTracer rayTracer = new RayTracer(
 				WIDTH, HEIGHT, 
