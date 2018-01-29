@@ -34,6 +34,11 @@
 
 - Collada support
 
+#### Optimisation and Profiling
+
+- Memory pre-allocation
+- Memory profiler
+
 ## Noteworthy Issues
 
 - View frustum doesn't work at all, it's just a straight line projection
