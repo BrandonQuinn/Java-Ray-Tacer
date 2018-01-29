@@ -40,8 +40,8 @@ public class RenderCanvas extends Canvas implements Runnable
 		draw.start();
 	}
 	
-	private static final int CROSS_LEN = 3;
-	private static final Color CROSS_COLOR = new Color(244, 167, 66);
+	private static final int CROSS_LEN = 5;
+	private static final Color CROSS_COLOR = new Color(230, 230, 230);
 	
 	@Override public void run()
 	{
@@ -59,14 +59,22 @@ public class RenderCanvas extends Canvas implements Runnable
 				if (samplesBeginRendered != null) {
 					for (ImageSample sample : samplesBeginRendered) {
 						g.setColor(CROSS_COLOR);
-						g.drawLine(sample.x - CROSS_LEN, sample.y, sample.x + CROSS_LEN, sample.y);
-						g.drawLine(sample.x, sample.y - CROSS_LEN, sample.x, sample.y + CROSS_LEN);
-						g.drawLine(sample.x - CROSS_LEN + sample.width, sample.y, sample.x + CROSS_LEN + sample.width, sample.y);
-						g.drawLine(sample.x + sample.width, sample.y - CROSS_LEN, sample.x + sample.width, sample.y + CROSS_LEN);
-						g.drawLine(sample.x - CROSS_LEN, sample.y + sample.height, sample.x + CROSS_LEN, sample.y + sample.height);
-						g.drawLine(sample.x, sample.y - CROSS_LEN + sample.height, sample.x, sample.y + CROSS_LEN + sample.height);
-						g.drawLine(sample.x - CROSS_LEN + sample.width, sample.y + sample.height, sample.x + CROSS_LEN + sample.width, sample.y + sample.height);
-						g.drawLine(sample.x + sample.width, sample.y - CROSS_LEN + sample.height, sample.x + sample.width, sample.y + CROSS_LEN + sample.height);
+						
+						// top left
+						g.drawLine(sample.x, sample.y, sample.x + CROSS_LEN, sample.y);
+						g.drawLine(sample.x, sample.y, sample.x, sample.y + CROSS_LEN);
+						
+						// top right
+						g.drawLine(sample.x + sample.width - CROSS_LEN - 1, sample.y, sample.x + sample.width - 1, sample.y);
+						g.drawLine(sample.x + sample.width - 1, sample.y, sample.x + sample.width - 1, sample.y + CROSS_LEN);
+						
+						// bottom right
+						g.drawLine(sample.x + sample.width - 1, sample.y + sample.height - CROSS_LEN - 1, sample.x + sample.width - 1, sample.y + sample.height - 1);
+						g.drawLine(sample.x + sample.width - CROSS_LEN - 1, sample.y + sample.height - 1, sample.x + sample.width - 1, sample.y + sample.height - 1);
+						
+						// bottom left
+						g.drawLine(sample.x, sample.y + sample.height - CROSS_LEN - 1, sample.x, sample.y + sample.height - 1);
+						g.drawLine(sample.x, sample.y + sample.height - 1, sample.x + CROSS_LEN, sample.y + sample.height - 1);
 					}
 				}
 			} catch (Exception e ) {

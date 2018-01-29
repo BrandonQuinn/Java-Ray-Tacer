@@ -52,9 +52,6 @@ public class ImageSampleRenderThread implements Runnable
 		RenderBuffer supersampledImage = new RenderBuffer(sample.FSAAfactor, sample.FSAAfactor);
 		for (int y = sample.y; y < sample.y + sample.height; y++) {
 			for (int x = sample.x; x < sample.x + sample.width; x++) {
-				dest.setPixel(x, y, new Color3d(255, 255, 255)); // just a fun little thing
-				// for the outer loop per-pixel we are going to do more pixels for each pixel creating the
-				// multi-sampling effect then output the result from the inner loop and get the average.
 				for (int sx = 0; sx < sample.FSAAfactor; sx++) {
 					for (int sy = 0; sy < sample.FSAAfactor; sy++) {
 						Rayd ray = Scene.mainCamera.ray(x + (sx / (double) sample.FSAAfactor), y + (sy / (double) sample.FSAAfactor));
